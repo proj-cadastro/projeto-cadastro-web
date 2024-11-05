@@ -108,13 +108,17 @@ jobs:
         run: |
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
-
+          
           # Debug: Verificar se GH_TOKEN está definido
           echo "GH_TOKEN is set"
+          echo "Token length: ${#GH_TOKEN}"
 
-          # Configura a URL remota com o token
-          git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/proj-cadastro/projeto-cadastro-web.git
-
+          # Verifica as remotas configuradas
+          git remote -v
+          
+          # Configura a URL remota diretamente
+          git config --global remote.origin.url https://x-access-token:${GH_TOKEN}@github.com/proj-cadastro/projeto-cadastro-web.git
+          
           # Verifica se há mudanças para commitar
           if [ -n "$(git status --porcelain)" ]; then
             git add package.json package-lock.json yarn.lock
