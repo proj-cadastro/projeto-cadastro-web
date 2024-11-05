@@ -36,9 +36,9 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           git fetch --tags
+          git config --global user.name 'github-actions'
+          git config --global user.email 'github-actions@github.com'
           if [ -z "$(git tag -l)" ]; then
-            git config --global user.name 'github-actions'
-            git config --global user.email 'github-actions@github.com'
             git tag -a v0.0.0 -m "Initial release"
             git push origin v0.0.0
           fi
@@ -109,15 +109,15 @@ jobs:
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
           
-          # Defina a URL remota com o token para autenticação
+          # Configura a URL remota com o token
           git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/proj-cadastro/projeto-cadastro-web.git
           
-          # Verifica se há mudanças antes de tentar o commit
+          # Verifica se há mudanças para commitar
           if [ -n "$(git status --porcelain)" ]; then
             git add package.json package-lock.json yarn.lock
             git commit -m "chore(release): version ${{ steps.version.outputs.NEW_VERSION }}"
             
-            # Verificar se a tag já existe antes de tentar criá-la
+            # Verifica se a tag já existe
             if git rev-parse "v${{ steps.version.outputs.NEW_VERSION }}" >/dev/null 2>&1; then
               echo "A tag v${{ steps.version.outputs.NEW_VERSION }} já existe. Não será recriada."
             else
