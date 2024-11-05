@@ -110,7 +110,7 @@ jobs:
           git config --global user.email 'github-actions@github.com'
           
           # Defina a URL remota com o token para autenticação
-          git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/lucas-adami/cadastro-professores-web.git
+          git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/proj-cadastro/projeto-cadastro-web.git
           
           # Verifica se há mudanças antes de tentar o commit
           if [ -n "$(git status --porcelain)" ]; then
