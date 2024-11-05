@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import Image from "next/image";
 
-export default function App() {
+export default function Welcome() {
   return (
     <Card
       sx={{
