@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import BodyText from "../atoms/BodyText";
-import StyledLink from "../atoms/StyledLink";
+import PrimaryButton from "../atoms/PrimaryButton";
 
 export default function LoginPrompt() {
   return (
@@ -14,7 +14,7 @@ export default function LoginPrompt() {
       }}
     >
       <BodyText text="Já possui uma conta?" />
-      <StyledLink text="cadastre-se" href="/register" />
+      <PrimaryButton text="Entrar" href="/login" />
     </Box>
   );
 }

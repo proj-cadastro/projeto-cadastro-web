@@ -1,7 +1,7 @@
 import { Box, Container } from "@mui/material";
 import LogoImage from "../atoms/Logo";
 import LoginForm from "../molecules/LoginForm";
-import LoginPrompt from "../molecules/LoginPrompt";
+import RegisterPrompt from "../molecules/RegisterPrompt";
 
 interface LoginCardProps {
   href: string;
@@ -39,9 +39,29 @@ export default function LoginCard({ href }: LoginCardProps) {
         >
           <LogoImage />
         </Box>
-
-        <LoginForm href={href} />
-        <LoginPrompt />
+        <Box
+          sx={{
+            mb: 2,
+            width: "100%",
+            height: "20%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <LoginForm href={href} />
+        </Box>
+        <Box
+          sx={{
+            width: "100%",
+            height: "20%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <RegisterPrompt />
+        </Box>
       </Box>
     </Container>
   );
