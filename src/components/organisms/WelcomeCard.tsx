@@ -22,7 +22,7 @@ export default function WelcomeCard() {
         <LoginPrompt />
       </CardContent>
       <Divider />
-      <CardActions >
+      <CardActions>
         <RegisterPrompt />
       </CardActions>
     </Card>
