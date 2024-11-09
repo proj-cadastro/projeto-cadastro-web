@@ -6,11 +6,10 @@ export default function RegisterPrompt() {
   return (
     <Box
       sx={{
-        textAlign: "center",
+        width:"100%",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        gap: 2,
       }}
     >
       <BodyText text="Ainda não possui uma conta?" />
