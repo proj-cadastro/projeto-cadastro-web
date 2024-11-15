@@ -68,7 +68,7 @@ function Navbar() {
                 <MenuItem onClick={closeRelatoriosMenu}>Cursos</MenuItem>
             </Link>
           </Menu>
-          {/* Menu "Cadastro" */}
+          
           <Button color="inherit" onClick={openCadastroMenu}>
             Relatórios
           </Button>

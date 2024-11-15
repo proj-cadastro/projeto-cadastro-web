@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { Container, Stack, Card, Typography, TextField, Select, MenuItem, FormControl, InputLabel, Button, Checkbox, FormControlLabel, Box } from '@mui/material';
 
 export default function RegisterProfessors() {
-  const [cursosSelecionados, setCursosSelecionados] = useState([]);
+  
   const [titulacao, setTitulacao] = useState('');
   const [unidadeID, setUnidadeID] = useState('');
   const [statusAtividade, setStatusAtividade] = useState('Ativo');
