@@ -1,8 +1,12 @@
 "use client"
+import TitleRegister from "@/components/atoms/TitleRegister";
+import InputCount from "@/components/atoms/InputCount";
+import InputField from "@/components/atoms/InputField";
 import Footer from "@/components/organisms/Footer";
 import Navbar from "@/components/organisms/Navbar";
 import React, { useState } from 'react';
 import { Container, Stack, Card, Typography, TextField, Select, MenuItem, FormControl, InputLabel, Button, Checkbox, FormControlLabel, Box } from '@mui/material';
+import RegisterButton from "@/components/atoms/RegisterButton";
 
 export default function RegisterProfessors() {
   
@@ -23,14 +27,12 @@ export default function RegisterProfessors() {
 
       <Navbar />
       <Card sx={{ width: '100%', maxWidth: 900, padding: 4 }}>
-        <Typography variant="h5" align="center" gutterBottom>
-          Cadastro de Professor<br />Fatec Votorantim
-        </Typography>
+        <TitleRegister text="Cadastro de Professor" subText="Fatec Votorantim" />        
         <Box component="form" sx={{ maxWidth: 800, mx: 'auto', mt: 4 }} onSubmit={(e) => e.preventDefault()}>
           <Stack spacing={3}>
             <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
-              <TextField label="Nome" fullWidth required placeholder="Nome Completo" />
-              <TextField label="E-mail" type="email" fullWidth required placeholder="E-mail" />            
+              <InputField id="name" label="Nome" autoFocus placeholder="Nome Completo"/>
+              <InputField id="email" label="E-mail" autoFocus placeholder="Email"/>                    
               <FormControl fullWidth required>
                 <InputLabel>Titulação</InputLabel>
                 <Select value={titulacao} onChange={(e) => setTitulacao(e.target.value)} label="Titulação">
@@ -39,7 +41,7 @@ export default function RegisterProfessors() {
                   <MenuItem value="Doutor">Doutor</MenuItem>
                 </Select>
               </FormControl>
-              <TextField label="Número Matrícula" type="number" fullWidth required placeholder="Número da Matrícula" inputProps={{ min: 0 }} />
+              <InputCount id="register number" label="Numero de Matricula" type="number" autoFocus placeholder="N° da Matrícula"/>              
             </Stack>
             <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
               <FormControl fullWidth required>
@@ -73,9 +75,7 @@ export default function RegisterProfessors() {
             </Stack>
             
             <Box textAlign="center">
-              <Button type="submit" variant="contained" color="primary">
-                Cadastrar
-              </Button>
+              <RegisterButton text="Cadastrar" />
             </Box>
           </Stack>
         </Box>

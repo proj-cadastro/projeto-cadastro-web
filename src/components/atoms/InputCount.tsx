@@ -1,6 +1,6 @@
 import { TextField } from "@mui/material";
 
-interface InputFieldProps {
+interface InputCountProps {
   id: string;
   label: string;
   type?: string;
@@ -8,7 +8,7 @@ interface InputFieldProps {
   placeholder?: string;
 }
 
-export default function InputField({ id, label, type = "text", autoFocus = false, placeholder }: InputFieldProps) {
+export default function InputCount({ id, label, type = "text", autoFocus = false, placeholder }: InputCountProps) {
   return (
     <TextField
       margin="normal"
@@ -20,6 +20,11 @@ export default function InputField({ id, label, type = "text", autoFocus = false
       type={type}
       autoFocus={autoFocus}
       placeholder={placeholder}
+      inputProps={{
+        min: 0,
+        max: 100,
+        step: 1,
+      }}
     />
   );
 }

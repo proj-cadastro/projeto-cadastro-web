@@ -4,7 +4,7 @@ import React, { useState, MouseEvent } from 'react';
 import { AppBar, IconButton, Toolbar, Typography, Box, Button, Menu, MenuItem } from '@mui/material';
 import Image from 'next/image';
 import Link from 'next/link';
-import StyledLink from "../atoms/StyledLink";
+
 
 
 
@@ -39,23 +39,21 @@ function Navbar() {
 
   return (
     <AppBar sx={{position: "fixed", backgroundColor: "#fff9",
-        color: "#fff"}}>
+        color: "#fff", height: "85px"}}>
       <Toolbar>
         <IconButton size="large" edge="start" color="inherit" aria-label="logo" sx={{ display: { xs: 'none', md: 'flex' } }}>
           <Image alt="Logo Fatec Votorantim" src="/assets/logoFatecCapi.png" width={100} height={50} style={{ marginBottom: '1rem' }} />
         </IconButton>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-          Fatec Votorantim
-        </Typography>
+        <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }} />
         <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-          {/* Usando Link para navegar para a página /home */}
+          
           
           <Link href="/home" passHref>
-            <Button color="inherit">Início</Button>
+            <Button color="primary">Início</Button>
           </Link>
           
           {/* Menu "Relatórios" */}
-          <Button color="inherit" onClick={openRelatoriosMenu}>
+          <Button color="primary" onClick={openRelatoriosMenu}>
             Cadastro
           </Button>
           <Menu anchorEl={anchorRelatorios} open={Boolean(anchorRelatorios)} onClose={closeRelatoriosMenu}>
@@ -69,15 +67,16 @@ function Navbar() {
             </Link>
           </Menu>
           
-          <Button color="inherit" onClick={openCadastroMenu}>
+          <Button color="primary" onClick={openCadastroMenu}>
             Relatórios
           </Button>
           <Menu anchorEl={anchorCadastro} open={Boolean(anchorCadastro)} onClose={closeCadastroMenu}>
-            
+            <Link href="/reportProfessors" passHref>
             <MenuItem onClick={closeCadastroMenu}>Professores</MenuItem>
-
+            </Link>
+            <Link href="/registerCourses" passHref>
             <MenuItem onClick={closeCadastroMenu}>Cursos</MenuItem>
-
+            </Link>
           </Menu>
         </Box>
         <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
@@ -89,12 +88,12 @@ function Navbar() {
             onClose={closeMenu}
             anchorEl={anchorNav}
             anchorOrigin={{
-              vertical: 'bottom', // Posição abaixo da imagem
-              horizontal: 'left',  // Alinha o menu à esquerda
+              vertical: 'bottom', 
+              horizontal: 'left',  
             }}
             transformOrigin={{
-              vertical: 'top',    // Transforma o menu para começar do topo
-              horizontal: 'left', // Alinha o menu à esquerda
+              vertical: 'top',    
+              horizontal: 'left', 
             }}
             sx={{ display: { xs: 'flex', md: 'none' } }}
           >
