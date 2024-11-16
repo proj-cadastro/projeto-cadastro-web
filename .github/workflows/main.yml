@@ -116,7 +116,7 @@ jobs:
           # Verifica as remotas configuradas
           git remote -v
           
-          # Configura a URL remota diretamente
+          # Configura a URL remota diretamente com o token de acesso
           git config --global remote.origin.url https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/proj-cadastro/projeto-cadastro-web.git
           
           # Verifica se há mudanças para commitar
