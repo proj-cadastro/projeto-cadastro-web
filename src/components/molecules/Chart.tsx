@@ -21,7 +21,7 @@ interface ChartProps {
 
 const Chart: React.FC<ChartProps> = ({ title, data, options }) => {
   return (
-    <Box sx={{ textAlign: "center", maxWidth: "600px", margin: "0 auto" }}>
+    <Box sx={{ textAlign: "center", margin: "0 auto" }}>
       <Typography variant="h6">{title}</Typography>
       <Bar data={data} options={options} />
     </Box>

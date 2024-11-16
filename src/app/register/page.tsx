@@ -22,7 +22,7 @@ export default function Register() {
               backgroundColor: 'white',
               p: 2,
               flexShrink: 0,
-              border: '3px solid lightgray',
+              border: '1px solid lightgray',
               borderRadius: '5px',          
             }}
           >
@@ -47,7 +47,7 @@ export default function Register() {
               <TextField label="E-mail" type="email" fullWidth required placeholder="E-mail" />
               <TextField label="Senha" type="password" fullWidth required placeholder="Senha" />
               <Box textAlign="center">
-                <PrimaryButton text="Cadastrar" href="" />
+                <PrimaryButton text="Cadastrar" href="/login" />
               </Box>
               <Box textAlign="center">
                 <BodyText text="Já possui uma conta?"/>

@@ -47,6 +47,7 @@ export default function LoginCard({ href }: LoginCardProps) {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+            
           }}
         >
           <LoginForm href={href} />

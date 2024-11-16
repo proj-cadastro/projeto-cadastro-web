@@ -1,3 +1,4 @@
+import { Box } from "@mui/material";
 import InputField from "../atoms/InputField";
 import PrimaryButton from "../atoms/PrimaryButton";
 
@@ -10,7 +11,13 @@ export default function LoginForm({ href }: LoginFormProps) {
     <form>
       <InputField id="user" label="Usuário" autoFocus />
       <InputField id="password" label="Senha" type="password" />
-      <PrimaryButton text="Entrar" href={href} />
+      <Box
+        sx={{
+          mt: 1,
+        }}
+      >
+        <PrimaryButton text="Entrar" href={href} />
+      </Box>
     </form>
   );
 }

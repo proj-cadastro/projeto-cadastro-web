@@ -10,7 +10,7 @@ export default function Home() {
     <Container sx={{ pt: 8 }}>
       <Navbar/>
       <Card sx={{ mt: 8, mb: 5 }}></Card>
-      <Card sx={{ padding: 2, top: 4 }}>
+      <Card>
         <Chart
           title="Distribuição de Professores"
           data={data}
