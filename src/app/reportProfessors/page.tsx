@@ -1,4 +1,3 @@
-// src/pages/ReportProfessors.tsx
 import ProfessorTable from "@/components/organisms/ProfessorReport";
 import Navbar from "@/components/organisms/Navbar";
 import Footer from "@/components/organisms/Footer";
@@ -39,10 +38,10 @@ export default function ReportProfessors() {
         sx={{
           display: "flex",
           justifyContent: "center",
-          alignItems: "flex-start",  
+          alignItems: "center",
           flexDirection: "column",
           width: "100%",
-          minHeight: "80vh",          
+          minHeight: "80vh",
         }}
       >
         <ProfessorTable professors={professorsData} />

@@ -11,17 +11,32 @@ import {
   Legend,
 } from "chart.js";
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 interface ChartProps {
   title: string;
-  data: any; 
+  data: any;
   options: any;
 }
 
 const Chart: React.FC<ChartProps> = ({ title, data, options }) => {
   return (
-    <Box sx={{ textAlign: "center", margin: "0 auto" }}>
+    <Box
+      sx={{
+        textAlign: "center",
+        margin: "0 auto",
+        width: "100%",
+        height: "100%",
+        padding: 2,
+      }}
+    >
       <Typography variant="h6">{title}</Typography>
       <Bar data={data} options={options} />
     </Box>
