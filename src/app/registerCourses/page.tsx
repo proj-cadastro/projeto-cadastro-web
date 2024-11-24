@@ -28,32 +28,38 @@ export default function RegisterCourses() {
   return (
     <Container
       sx={{
-        minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
-        pt: 10,
+        minHeight: "100vh",
+        padding: 0,
       }}
     >
-      {/* Navbar */}
       <Box sx={{ pt: 4 }}>
         <Navbar />
       </Box>
 
-      {/* Form Container */}
       <Box
         component="main"
         sx={{
           flex: 1,
           display: "flex",
           justifyContent: "center",
-          alignItems: "flex-start",
-          px: 2,
+          alignItems: "center",
+          padding: 2,
+          mt: 10,
         }}
       >
         <Grid2 container spacing={2} justifyContent="center">
           <Grid2 size={12}>
-            <Card sx={{ width: "100%", padding: 2 }}>
+            <Card
+              sx={{
+                width: "100%",
+                maxWidth: 1200,
+                padding: 4,
+                boxShadow: 3,
+              }}
+            >
               <TitleRegister
                 text="Cadastro de Cursos"
                 subText="Fatec Votorantim"
@@ -129,9 +135,9 @@ export default function RegisterCourses() {
                       name="inputDisciplinas"
                       placeholder="Digite as disciplinas que compõem o curso separadas por vírgula."
                       multiline
-                      rows={2} // Número de linhas visíveis
-                      variant="outlined" // Estilo do campo (pode ser "filled" ou "standard")
-                      margin="normal" // Margem para o campo
+                      rows={2}
+                      variant="outlined"
+                      margin="normal"
                     />
                   </Box>
 
@@ -145,7 +151,6 @@ export default function RegisterCourses() {
         </Grid2>
       </Box>
 
-      {/* Footer */}
       <Box sx={{ mt: 12 }}>
         <Footer />
       </Box>

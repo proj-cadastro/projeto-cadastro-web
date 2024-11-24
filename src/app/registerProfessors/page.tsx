@@ -36,32 +36,38 @@ export default function RegisterProfessors() {
   return (
     <Container
       sx={{
-        minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
-        pt: 10,
+        minHeight: "100vh",
+        padding: 0,
       }}
     >
-      {/* Navbar */}
       <Box sx={{ pt: 2 }}>
         <Navbar />
       </Box>
 
-      {/* Form Container */}
       <Box
         component="main"
         sx={{
           flex: 1,
           display: "flex",
           justifyContent: "center",
-          alignItems: "flex-start",
-          px: 2,
+          alignItems: "center",
+          padding: 2,
+          mt: 12,
         }}
       >
         <Grid2 container spacing={2} justifyContent="center">
           <Grid2 size={12}>
-            <Card sx={{ width: "100%", padding: 4 }}>
+            <Card
+              sx={{
+                width: "100%",
+                maxWidth: 1200,
+                padding: 4,
+                boxShadow: 3,
+              }}
+            >
               <TitleRegister
                 text="Cadastro de Professor"
                 subText="Fatec Votorantim"
