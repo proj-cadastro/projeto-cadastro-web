@@ -1,3 +1,6 @@
+"use client";
+
+import React, { useState } from "react";
 import ProfessorTable from "@/components/organisms/ProfessorReport";
 import Navbar from "@/components/organisms/Navbar";
 import Footer from "@/components/organisms/Footer";
@@ -30,23 +33,62 @@ const professorsData = [
   },
 ];
 
+const COLUMN_LABELS: Record<string, string> = {
+  nome: "Nome",
+  email: "E-mail",
+  titulacao: "Titulação",
+  numeroMatricula: "N° Matrícula",
+  unidadeID: "Unidade",
+  lattes: "Lattes",
+  referencia: "Referência",
+  observacoes: "Observações",
+  statusAtividade: "Status",
+  cursos: "Cursos",
+  acoes: "Ações",
+};
+
+const COLUMN_OPTIONS = Object.keys(COLUMN_LABELS);
+
 export default function ReportProfessors() {
+  const [visibleColumns, setVisibleColumns] = useState<string[]>([
+    "nome",
+    "email",
+    "lattes",
+    "cursos",
+    "acoes",
+  ]);
+
   return (
-    <Container sx={{ pt: 8, height: "100vh" }}>
+    <Container
+      sx={{
+        height: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
       <Navbar />
       <Box
         sx={{
           display: "flex",
+          flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          flexDirection: "column",
-          width: "100%",
-          minHeight: "80vh",
+          flex: 1,
+          mt: 2,
         }}
       >
-        <ProfessorTable professors={professorsData} />
+        <ProfessorTable
+          professors={professorsData}
+          visibleColumns={visibleColumns}
+          setVisibleColumns={setVisibleColumns}
+          COLUMN_OPTIONS={COLUMN_OPTIONS}
+          COLUMN_LABELS={COLUMN_LABELS}
+        />
       </Box>
-      <Footer />
+      <Box sx={{ mt: 12 }}>
+        <Footer />
+      </Box>
     </Container>
   );
 }
