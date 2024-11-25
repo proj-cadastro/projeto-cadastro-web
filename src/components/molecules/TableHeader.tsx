@@ -4,32 +4,29 @@ interface TableHeaderProps {
   visibleColumns: string[];
 }
 
-const allColumns = {
-  nome: "Nome",
+const allColumns: Record<string, string> = {
+  name: "Nome",
   email: "E-mail",
-  titulacao: "Titulação",
-  numeroMatricula: "N° Matrícula",
-  unidadeID: "Unidade",
+  titration: "Titulação",
+  registrationNumber: "N° Matrícula",
+  unitId: "Unidade",
   lattes: "Lattes",
-  referencia: "Referência",
-  observacoes: "Observações",
-  statusAtividade: "Status",
-  cursos: "Cursos",
-  acoes: "Ações",
+  reference: "Referência",
+  notes: "Observações",
+  activityStatus: "Status",
+  courses: "Cursos",
+  actions: "Ações",
 };
 
 export default function TableHeader({ visibleColumns }: TableHeaderProps) {
   return (
     <TableHead>
       <TableRow>
-        {Object.entries(allColumns).map(
-          ([key, label]) =>
-            visibleColumns.includes(key) && (
-              <TableCell key={key} sx={{ minWidth: "150px" }}>
-                {label}
-              </TableCell>
-            )
-        )}
+        {visibleColumns.map((column) => (
+          <TableCell key={column} sx={{ minWidth: "150px" }}>
+            {allColumns[column as keyof typeof allColumns]}
+          </TableCell>
+        ))}
       </TableRow>
     </TableHead>
   );

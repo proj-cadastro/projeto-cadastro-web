@@ -1,18 +1,18 @@
-import { TableRow, TableCell, Button, Box} from "@mui/material";
+import { TableRow, TableCell, Button, Box } from "@mui/material";
 import BodyText from "../atoms/BodyText";
 
 interface DataTableRowProps {
   data: {
-    nome: string;
+    name: string;
     email: string;
-    titulacao: string;
-    numeroMatricula: string;
-    unidadeID: string;
+    titration: string;
+    registrationNumber: string;
+    unitId: string;
     lattes: string;
-    referencia: string;
-    observacoes: string;
-    statusAtividade: string;
-    cursos: string[];
+    reference: string;
+    notes: string;
+    activityStatus: string;
+    courses: string[];
   };
   visibleColumns: string[];
 }
@@ -22,17 +22,17 @@ export default function DataTableRow({
   visibleColumns,
 }: DataTableRowProps) {
   const allColumns = {
-    nome: <BodyText text={data.nome} />,
+    name: <BodyText text={data.name} />,
     email: <BodyText text={data.email} />,
-    titulacao: <BodyText text={data.titulacao} />,
-    numeroMatricula: <BodyText text={data.numeroMatricula} />,
-    unidadeID: <BodyText text={data.unidadeID} />,
+    titration: <BodyText text={data.titration} />,
+    registrationNumber: <BodyText text={data.registrationNumber} />,
+    unitId: <BodyText text={data.unitId} />,
     lattes: <BodyText text={data.lattes} />,
-    referencia: <BodyText text={data.referencia} />,
-    observacoes: <BodyText text={data.observacoes} />,
-    statusAtividade: <BodyText text={data.statusAtividade} />,
-    cursos: <BodyText text={data.cursos.join(", ")} />,
-    acoes: (
+    reference: <BodyText text={data.reference} />,
+    notes: <BodyText text={data.notes} />,
+    activityStatus: <BodyText text={data.activityStatus} />,
+    courses: <BodyText text={data.courses.join(", ")} />,
+    actions: (
       <Box sx={{ display: "flex", gap: 1 }}>
         <Button variant="outlined" color="primary" size="small">
           Editar
@@ -46,14 +46,11 @@ export default function DataTableRow({
 
   return (
     <TableRow>
-      {Object.entries(allColumns).map(
-        ([key, content]) =>
-          visibleColumns.includes(key) && (
-            <TableCell key={key} sx={{ minWidth: "150px" }}>
-              {content}
-            </TableCell>
-          )
-      )}
+      {visibleColumns.map((column) => (
+        <TableCell key={column} sx={{ minWidth: "150px" }}>
+          {allColumns[column as keyof typeof allColumns]} {/* Corrigindo o tipo */}
+        </TableCell>
+      ))}
     </TableRow>
   );
 }

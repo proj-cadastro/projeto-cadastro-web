@@ -33,7 +33,7 @@ export default function ColumnVisibilityControl({
       sx={{
         display: "flex",
         justifyContent: "flex-end",
-        mb: 2,
+        mt: 2,
         width: "100%",
       }}
     >

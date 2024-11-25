@@ -1,61 +1,64 @@
 "use client";
 
 import React, { useState } from "react";
-import ProfessorTable from "@/components/organisms/ProfessorReport";
+import ProfessorTable from "@/components/organisms/ProfessorTable";
 import Navbar from "@/components/organisms/Navbar";
 import Footer from "@/components/organisms/Footer";
 import { Container, Box } from "@mui/material";
+import { Professor } from "../../types/Professors";
 
-const professorsData = [
+const professorsData: Professor[] = [
   {
-    nome: "Dr. João Silva",
+    id: "1",
+    name: "Dr. João Silva",
     email: "joao.silva@fatecvotorantim.edu.br",
-    titulacao: "Doutor",
-    numeroMatricula: "123456",
-    unidadeID: "301 - Votorantim",
+    titration: "Doutor",
+    registrationNumber: "123456",
+    unitId: "301 - Votorantim",
     lattes: "http://lattes.cnpq.br/123456789",
-    referencia: "PES I - A",
-    observacoes: "Professor com experiência em TI.",
-    statusAtividade: "Ativo",
-    cursos: ["DSM", "CO"],
+    reference: "PES I - A",
+    notes: "Professor com experiência em TI.",
+    activityStatus: "Ativo",
+    courses: ["DSM", "CO"],
   },
   {
-    nome: "Profa. Maria Souza",
+    id: "2",
+    name: "Profa. Maria Souza",
     email: "maria.souza@fatecvotorantim.edu.br",
-    titulacao: "Mestre",
-    numeroMatricula: "654321",
-    unidadeID: "123 - Sorocaba",
+    titration: "Mestre",
+    registrationNumber: "654321",
+    unitId: "123 - Sorocaba",
     lattes: "http://lattes.cnpq.br/987654321",
-    referencia: "PES II - B",
-    observacoes: "Professora com foco em redes.",
-    statusAtividade: "Ativo",
-    cursos: ["CO", "CDN"],
+    reference: "PES II - B",
+    notes: "Professora com foco em redes.",
+    activityStatus: "Ativo",
+    courses: ["CO", "CDN"],
   },
 ];
 
 const COLUMN_LABELS: Record<string, string> = {
-  nome: "Nome",
+  name: "Nome",
   email: "E-mail",
-  titulacao: "Titulação",
-  numeroMatricula: "N° Matrícula",
-  unidadeID: "Unidade",
+  titration: "Titulação",
+  registrationNumber: "N° Matrícula",
+  unitId: "Unidade",
   lattes: "Lattes",
-  referencia: "Referência",
-  observacoes: "Observações",
-  statusAtividade: "Status",
-  cursos: "Cursos",
-  acoes: "Ações",
+  reference: "Referência",
+  notes: "Observações",
+  activityStatus: "Status",
+  courses: "Cursos",
+  actions: "Ações",
 };
 
 const COLUMN_OPTIONS = Object.keys(COLUMN_LABELS);
 
 export default function ReportProfessors() {
   const [visibleColumns, setVisibleColumns] = useState<string[]>([
-    "nome",
+    "name",
     "email",
     "lattes",
-    "cursos",
-    "acoes",
+    "courses",
+    "actions",
   ]);
 
   return (
