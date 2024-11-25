@@ -3,20 +3,7 @@ import { Box } from "@mui/material";
 import TextFilter from "../molecules/TextFilter";
 import CheckboxFilter from "../molecules/CheckboxFilter";
 import ToggleFilter from "../molecules/ToggleFilter";
-
-interface Filters {
-  search: string;
-  courses: string[];
-  titulacoes: string[];
-  status: boolean;
-}
-
-interface ProfessorFiltersProps {
-  filters: Filters;
-  setFilters: (filters: Filters) => void;
-  availableCourses: string[];
-  availableTitulacoes: string[];
-}
+import { ProfessorFiltersProps } from "../../types/Filters";
 
 export default function ProfessorFilters({
   filters,
@@ -41,12 +28,12 @@ export default function ProfessorFilters({
       sx={{
         display: "flex",
         width: "100%",
-        justifyContent: "space-between", 
+        justifyContent: "space-between",
         alignItems: "center",
         border: "1px solid #ccc",
         padding: 2,
         borderRadius: 2,
-        backgroundColor: "#fdfcfc"
+        backgroundColor: "#fdfcfc",
       }}
     >
       <TextFilter
