@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Table, TableBody, TableContainer, Paper, Box } from "@mui/material";
+import {
+  Table,
+  TableBody,
+  TableContainer,
+  Paper,
+  Box,
+  Pagination,
+} from "@mui/material";
 import DataTableRow from "../molecules/TableRow";
 import TableHeader from "../molecules/TableHeader";
 import ColumnVisibilityControl from "../molecules/ColumnVisibilityControl";
@@ -21,6 +28,9 @@ export default function ProfessorTable({
   COLUMN_OPTIONS,
   COLUMN_LABELS,
 }: ProfessorTableProps) {
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
   const [filters, setFilters] = useState<{
     search: string;
     courses: string[];
@@ -53,10 +63,24 @@ export default function ProfessorTable({
     return matchesSearch && matchesCourses && matchesTitration && matchesStatus;
   });
 
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  
+  const currentPageItems = filteredProfessors.slice(
+    startIndex,
+    startIndex + itemsPerPage
+  );
+
+  const handlePageChange = (
+    _event: React.ChangeEvent<unknown>,
+    page: number
+  ) => {
+    setCurrentPage(page);
+  };
+
   const handleColumnVisibilityChange = (selectedColumns: string[]) => {
     const updatedColumns = [
-      ...selectedColumns.filter((col) => col !== "actions"), 
-      "actions", 
+      ...selectedColumns.filter((col) => col !== "actions"),
+      "actions",
     ];
     setVisibleColumns(updatedColumns);
   };
@@ -85,7 +109,7 @@ export default function ProfessorTable({
         <Table>
           <TableHeader visibleColumns={visibleColumns} />
           <TableBody>
-            {filteredProfessors.map((professor, index) => (
+            {currentPageItems.map((professor, index) => (
               <DataTableRow
                 key={index}
                 data={professor}
@@ -95,6 +119,12 @@ export default function ProfessorTable({
           </TableBody>
         </Table>
       </TableContainer>
+      <Pagination
+        count={Math.ceil(filteredProfessors.length / itemsPerPage)} // Total de páginas
+        page={currentPage}
+        onChange={handlePageChange}
+        sx={{ mt: 2, display: "flex", justifyContent: "center" }}
+      />
       <ColumnVisibilityControl
         visibleColumns={visibleColumns}
         setVisibleColumns={handleColumnVisibilityChange}
