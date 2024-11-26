@@ -48,7 +48,7 @@ export default function DataTableRow({
     <TableRow>
       {visibleColumns.map((column) => (
         <TableCell key={column} sx={{ minWidth: "150px" }}>
-          {allColumns[column as keyof typeof allColumns]} {/* Corrigindo o tipo */}
+          {allColumns[column as keyof typeof allColumns]}
         </TableCell>
       ))}
     </TableRow>
