@@ -28,7 +28,6 @@ export default function ProfessorTable({
   COLUMN_OPTIONS,
   COLUMN_LABELS,
 }: ProfessorTableProps) {
-
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
   const [filters, setFilters] = useState<{
@@ -64,7 +63,7 @@ export default function ProfessorTable({
   });
 
   const startIndex = (currentPage - 1) * itemsPerPage;
-  
+
   const currentPageItems = filteredProfessors.slice(
     startIndex,
     startIndex + itemsPerPage
