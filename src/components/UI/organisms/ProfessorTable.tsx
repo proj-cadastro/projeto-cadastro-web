@@ -11,7 +11,7 @@ import DataTableRow from "../molecules/TableRow";
 import TableHeader from "../molecules/TableHeader";
 import ColumnVisibilityControl from "../molecules/ColumnVisibilityControl";
 import ProfessorFilters from "./ProfessorFilters";
-import { Professor } from "../../types/Professors"; // Importando o tipo correto
+import { Professor } from "../../../interfaces/Professors"; // Importando o tipo correto
 
 interface ProfessorTableProps {
   professors: Professor[];
@@ -85,7 +85,17 @@ export default function ProfessorTable({
   };
 
   return (
-    <Box>
+    <Box
+      sx={{
+        width: "100%",
+        maxWidth: "90%",
+        margin: "0 auto",
+        borderRadius: 2,
+        mt: 12,
+        overflowX: "auto",
+        pb: 12,
+      }}
+    >
       <ProfessorFilters
         filters={filters}
         setFilters={setFilters}
@@ -97,11 +107,10 @@ export default function ProfessorTable({
         component={Paper}
         sx={{
           width: "100%",
-          maxWidth: 1400,
           margin: "0 auto",
           borderRadius: 2,
           boxShadow: 3,
-          mt: 4,
+          mt: 2,
           overflowX: "auto",
         }}
       >

@@ -3,7 +3,7 @@ import { Box } from "@mui/material";
 import TextFilter from "../molecules/TextFilter";
 import CheckboxFilter from "../molecules/CheckboxFilter";
 import ToggleFilter from "../molecules/ToggleFilter";
-import { ProfessorFiltersProps } from "../../types/Filters";
+import { ProfessorFiltersProps } from "../../../interfaces/Filters";
 
 export default function ProfessorFilters({
   filters,

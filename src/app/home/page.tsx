@@ -1,9 +1,9 @@
 "use client";
-import Footer from "@/components/organisms/Footer";
+import Footer from "@/components/UI/organisms/Footer";
 import { Box, Card, Container } from "@mui/material";
-import Chart from "@/components/molecules/Chart";
+import Chart from "@/components/UI/molecules/Chart";
 import { data, options } from "../../utils/mockChart";
-import Navbar from "@/components/organisms/Navbar";
+import Navbar from "@/components/UI/organisms/Navbar";
 
 export default function Home() {
   return (

@@ -14,7 +14,7 @@ export default function LoginPrompt() {
       }}
     >
       <BodyText text="Já possui uma conta?" />
-      <PrimaryButton text="Entrar" href="/login" />
+      <PrimaryButton text="Entrar" href="/user/login" />
     </Box>
   );
 }

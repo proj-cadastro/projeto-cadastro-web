@@ -1,4 +1,4 @@
-import WelcomeCard from "../../components/organisms/WelcomeCard";
+import WelcomeCard from "../../components/UI/organisms/WelcomeCard";
 
 export default function Welcome() {
   return <WelcomeCard />;
