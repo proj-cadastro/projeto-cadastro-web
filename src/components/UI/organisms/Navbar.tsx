@@ -87,10 +87,10 @@ function Navbar() {
             open={Boolean(anchorRelatorios)}
             onClose={closeRelatoriosMenu}
           >
-            <Link href="/registerProfessors" passHref>
+            <Link href="/professor/registerProfessors" passHref>
               <MenuItem onClick={closeRelatoriosMenu}>Professores</MenuItem>
             </Link>
-            <Link href="/registerCourses" passHref>
+            <Link href="/course/registerCourses" passHref>
               <MenuItem onClick={closeRelatoriosMenu}>Cursos</MenuItem>
             </Link>
           </Menu>
@@ -103,10 +103,10 @@ function Navbar() {
             open={Boolean(anchorCadastro)}
             onClose={closeCadastroMenu}
           >
-            <Link href="/reportProfessors" passHref>
+            <Link href="/professor/reportProfessors" passHref>
               <MenuItem onClick={closeCadastroMenu}>Professores</MenuItem>
             </Link>
-            <Link href="/reportCourses" passHref>
+            <Link href="/course/reportCourses" passHref>
               <MenuItem onClick={closeCadastroMenu}>Cursos</MenuItem>
             </Link>
           </Menu>

@@ -1,31 +1,35 @@
 "use client";
 
 import React, { useState } from "react";
-import Navbar from "@/components/organisms/Navbar";
-import Footer from "@/components/organisms/Footer";
-import CoursesTable from "../../components/organisms/CoursesTable";
+import ProfessorTable from "@/components/UI/organisms/ProfessorTable";
+import Navbar from "@/components/UI/organisms/Navbar";
+import Footer from "@/components/UI/organisms/Footer";
 import { Container, Box } from "@mui/material";
-import { mockCourses } from "../../utils/mockCourses";
+import { professorsData } from "../../../utils/mockProfessors"; // Atualize o caminho conforme necessário
+//import { Professor } from "../../types/Professors";
 
 const COLUMN_LABELS: Record<string, string> = {
-  name: "Name",
-  codCourse: "Code",
-  subjects: "Subjects",
-  initialism: "Initialism",
-  model: "Model",
-  professors: "Professors",
-  coordinator: "Coordinator",
-  actions: "Actions",
+  name: "Nome",
+  email: "E-mail",
+  titration: "Titulação",
+  registrationNumber: "N° Matrícula",
+  unitId: "Unidade",
+  lattes: "Lattes",
+  reference: "Referência",
+  notes: "Observações",
+  activityStatus: "Status",
+  courses: "Cursos",
+  actions: "Ações",
 };
 
 const COLUMN_OPTIONS = Object.keys(COLUMN_LABELS);
 
-export default function ReportCourses() {
+export default function ReportProfessors() {
   const [visibleColumns, setVisibleColumns] = useState<string[]>([
     "name",
-    "codCourse",
-    "model",
-    "coordinator",
+    "email",
+    "lattes",
+    "courses",
     "actions",
   ]);
 
@@ -49,8 +53,8 @@ export default function ReportCourses() {
           mt: 4,
         }}
       >
-        <CoursesTable
-          courses={mockCourses}
+        <ProfessorTable
+          professors={professorsData}
           visibleColumns={visibleColumns}
           setVisibleColumns={setVisibleColumns}
           COLUMN_OPTIONS={COLUMN_OPTIONS}

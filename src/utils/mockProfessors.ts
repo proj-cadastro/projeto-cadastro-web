@@ -1,4 +1,4 @@
-import { Professor } from "../types/Professors";
+import { Professor } from "../interfaces/Professors";
 
 export const professorsData: Professor[] = [
   {

@@ -1,9 +1,9 @@
 "use client";
-import TitleRegister from "@/components/atoms/TitleRegister";
-import InputCount from "@/components/atoms/InputCount";
-import InputField from "@/components/atoms/InputField";
-import Footer from "@/components/organisms/Footer";
-import Navbar from "@/components/organisms/Navbar";
+import TitleRegister from "@/components/UI/atoms/TitleRegister";
+import InputCount from "@/components/UI/atoms/InputCount";
+import InputField from "@/components/UI/atoms/InputField";
+import Footer from "@/components/UI/organisms/Footer";
+import Navbar from "@/components/UI/organisms/Navbar";
 import React, { useState } from "react";
 import {
   Container,
@@ -20,7 +20,7 @@ import {
   Box,
   Grid2,
 } from "@mui/material";
-import RegisterButton from "@/components/atoms/RegisterButton";
+import RegisterButton from "@/components/UI/atoms/RegisterButton";
 
 export default function RegisterProfessors() {
   const [titulacao, setTitulacao] = useState("");

@@ -1,7 +1,7 @@
 "use client";
 
-import Navbar from "@/components/organisms/Navbar";
-import Footer from "@/components/organisms/Footer";
+import Navbar from "@/components/UI/organisms/Navbar";
+import Footer from "@/components/UI/organisms/Footer";
 import {
   Box,
   Card,
@@ -14,11 +14,11 @@ import {
   TextField,
   Grid2,
 } from "@mui/material";
-import TitleRegister from "@/components/atoms/TitleRegister";
-import InputCount from "@/components/atoms/InputCount";
-import InputField from "@/components/atoms/InputField";
+import TitleRegister from "@/components/UI/atoms/TitleRegister";
+import InputCount from "@/components/UI/atoms/InputCount";
+import InputField from "@/components/UI/atoms/InputField";
 import React, { useState } from "react";
-import RegisterButton from "@/components/atoms/RegisterButton";
+import RegisterButton from "@/components/UI/atoms/RegisterButton";
 
 export default function RegisterCourses() {
   const [modalidade, setModalidade] = useState("");

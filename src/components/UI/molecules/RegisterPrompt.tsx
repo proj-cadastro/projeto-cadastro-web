@@ -13,7 +13,7 @@ export default function RegisterPrompt() {
       }}
     >
       <BodyText text="Ainda não possui uma conta?" />
-      <StyledLink text="Cadastre-se aqui!" href="/register" />
+      <StyledLink text="Cadastre-se aqui!" href="/user/register" />
     </Box>
   );
 }
