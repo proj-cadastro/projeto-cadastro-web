@@ -11,7 +11,7 @@ import DataTableRow from "../molecules/TableRow";
 import TableHeader from "../molecules/TableHeader";
 import ColumnVisibilityControl from "../molecules/ColumnVisibilityControl";
 import ProfessorFilters from "./ProfessorFilters";
-import { Professor } from "../../../interfaces/Professors"; // Importando o tipo correto
+import { Professor } from "../../../interfaces/IProfessors"; // Importando o tipo correto
 
 interface ProfessorTableProps {
   professors: Professor[];

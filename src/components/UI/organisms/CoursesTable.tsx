@@ -10,7 +10,7 @@ import {
 import CoursesTableHeader from "../molecules/CoursesTableHeader";
 import CourseTableRow from "../molecules/CoursesTableRow";
 import CoursesFilters from "../molecules/CoursesFilters";
-import { CourseType } from "../../../interfaces/Courses";
+import { CourseType } from "../../../interfaces/ICourses";
 
 function transformCourseToRecord(course: CourseType): Record<string, string> {
   return {
