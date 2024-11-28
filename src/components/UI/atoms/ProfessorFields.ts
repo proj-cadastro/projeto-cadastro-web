@@ -1,6 +1,14 @@
 //variável utilizada para mapear os inputs e seus tipos no formulário
-
 import { FieldConfig } from "../organisms/DynamicForm";
+import useCourses from "@/service/UtilitarioCursoService";
+//transformar cursosCadastrados em dicionário
+// -> label: value
+// -> DSM: _ID
+// -> COO: _ID
+// -> ...
+
+
+
 
 export const professorFields: FieldConfig[] = [
     {
@@ -18,31 +26,24 @@ export const professorFields: FieldConfig[] = [
         required: true,
     },
     {
-        id: "titulacao",
+        id: "titration",
         label: "Titulação",
         type: "select",
         options: [
-            { value: "Especialista", label: "Especialista" },
-            { value: "Mestre", label: "Mestre" },
-            { value: "Doutor", label: "Doutor" },
+            { value: "specialist", label: "Especialista" },
+            { value: "master", label: "Mestre" },
+            { value: "doctor", label: "Doutor" },
         ],
         required: true,
     },
     {
-        id: "registerNumber",
-        label: "Número de Matrícula",
-        type: "number",
-        placeholder: "N° da Matrícula",
-        required: true,
-    },
-    {
-        id: "unidadeID",
+        id: "unitId",
         label: "Código UE",
         type: "select",
         options: [
-            { value: "301 - Votorantim", label: "301 - Votorantim" },
-            { value: "123 - Sorocaba", label: "123 - Sorocaba" },
-            { value: "900 - Tatuí", label: "900 - Tatuí" },
+            { value: "301", label: "301 - Votorantim" },
+            { value: "123", label: "123 - Sorocaba" },
+            { value: "900", label: "900 - Tatuí" },
         ],
         required: true,
     },
@@ -55,19 +56,37 @@ export const professorFields: FieldConfig[] = [
         required: true,
     },
     {
+        id: "lattes",
+        label: "lattes",
+        type: "text",
+        placeholder: "lattes",
+        required: true,
+    },
+    {
         id: "notes",
         label: "Observações",
         type: "textarea",
         placeholder: "Observações",
     },
+
     {
         id: "activityStatus",
         label: "Status de Atividade",
         type: "select",
         options: [
-            { value: "Ativo", label: "Ativo" },
-            { value: "Desativado", label: "Desativado" },
+            { value: "active", label: "Ativo" },
+            { value: "inactive", label: "Desativado" },
+            { value: "pending", label: "Pendente" },
+            { value: "on-leave", label: "Saindo" }
         ],
         required: true,
     },
+    {
+        id: "coursesId",
+        label: "Cursos Relacionados",
+        type: "select",
+        options: [{value: "arroz", label: "arroz"}],
+        required: true,
+    },
 ];
+

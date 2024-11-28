@@ -22,12 +22,12 @@ export interface FieldConfig {
     label: string;
     type: "text" | "number" | "select" | "textarea" | "checkbox" | "url";
     placeholder?: string;
-    options?: Array<{ value: string; label: string }>;
+    options?: Array<{ value: any; label: string }>;
     required?: boolean;
 }
 
 interface DynamicFormProps {
-    title: React.ReactNode;
+    title?: React.ReactNode;
     fields: FieldConfig[];
     onSubmit: (data: Record<string, any>) => void;
     initialValues?: Record<string, any>; // Dados iniciais para edição
@@ -39,7 +39,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
     onSubmit,
     initialValues = {},
 }) => {
-    const [formData, setFormData] = useState<Record<string, any>>(() => {
+    const [formData, setFormData] = useState<Record<string, any>>(() => {   
         return fields.reduce<Record<string, any>>((acc, field) => {
             acc[field.id] = initialValues[field.id] || ""; // Inicializa com string vazia
             return acc;
