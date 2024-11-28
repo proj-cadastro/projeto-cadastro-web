@@ -1,4 +1,4 @@
-import { CourseType } from "@/interfaces/Courses";
+import { CourseType } from "@/interfaces/ICourses";
 
 export const mockCourses: CourseType[] = [
   {

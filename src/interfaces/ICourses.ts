@@ -1,4 +1,4 @@
-import { IProfessor } from "./Professors";
+import { IProfessor } from "./IProfessors";
 
 export interface ICourse {
   id: string;
@@ -7,6 +7,6 @@ export interface ICourse {
   subjects?: string[];
   initialism: string;
   model: string;
-  professors: IProfessor[];
-  coordinator: IProfessor;
+  professors: string[];
+  coordinator: string;
 }

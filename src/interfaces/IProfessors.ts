@@ -1,4 +1,4 @@
-import { ICourse } from "./Courses";
+import { ICourse } from "./ICourses";
 
 export interface IProfessor {
   id: string;
@@ -11,5 +11,5 @@ export interface IProfessor {
   reference: string;
   notes: string;
   activityStatus: string;
-  courses: ICourse[];
+  courses: string[];
 }
