@@ -1,5 +1,3 @@
-import { ICourse } from "./ICourses";
-
 export interface IProfessor {
   _id: string;
   name: string;

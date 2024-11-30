@@ -11,10 +11,10 @@ import DataTableRow from "../molecules/TableRow";
 import TableHeader from "../molecules/TableHeader";
 import ColumnVisibilityControl from "../molecules/ColumnVisibilityControl";
 import ProfessorFilters from "./ProfessorFilters";
-import { Professor } from "../../../interfaces/IProfessors"; // Importando o tipo correto
+import { IProfessor } from "../../../interfaces/IProfessors";
 
 interface ProfessorTableProps {
-  professors: Professor[];
+  professors: { value: IProfessor; label: string }[];
   visibleColumns: string[];
   setVisibleColumns: (columns: string[]) => void;
   COLUMN_OPTIONS: string[];
@@ -34,33 +34,43 @@ export default function ProfessorTable({
     search: string;
     courses: string[];
     titulacoes: string[];
-    status: boolean;
+    status: string;
   }>({
     search: "",
     courses: [],
     titulacoes: [],
-    status: true,
+    status: "",
   });
 
   const filteredProfessors = professors.filter((professor) => {
+    console.log("Professor atual:", professor); 
+
+    const profValue = professor.value;
+
     const matchesSearch =
-      professor.name.toLowerCase().includes(filters.search.toLowerCase()) ||
-      professor.email.toLowerCase().includes(filters.search.toLowerCase()) ||
-      professor.registrationNumber.includes(filters.search);
+      profValue.name.toLowerCase().includes(filters.search.toLowerCase()) ||
+      profValue.email.toLowerCase().includes(filters.search.toLowerCase());
+    console.log("Matches Search:", matchesSearch);
 
     const matchesCourses =
       filters.courses.length === 0 ||
-      filters.courses.some((course) => professor.courses.includes(course));
+      filters.courses.some((course) => profValue.courses.includes(course));
+    console.log("Matches Courses:", matchesCourses);
 
     const matchesTitration =
       filters.titulacoes.length === 0 ||
-      filters.titulacoes.includes(professor.titration);
+      filters.titulacoes.includes(profValue.titration);
+    console.log("Matches Titration:", matchesTitration);
 
     const matchesStatus =
-      !filters.status || professor.activityStatus === "Ativo";
+      filters.status === "" || profValue.activityStatus === filters.status;
+
+    console.log("Matches Status:", matchesStatus); 
 
     return matchesSearch && matchesCourses && matchesTitration && matchesStatus;
   });
+
+  console.log("Professores filtrados", filteredProfessors.length);
 
   const startIndex = (currentPage - 1) * itemsPerPage;
 
@@ -117,10 +127,10 @@ export default function ProfessorTable({
         <Table>
           <TableHeader visibleColumns={visibleColumns} />
           <TableBody>
-            {currentPageItems.map((professor, index) => (
+            {currentPageItems.map((professor) => (
               <DataTableRow
-                key={index}
-                data={professor}
+                key={professor.value._id} 
+                data={professor.value}
                 visibleColumns={visibleColumns}
               />
             ))}
@@ -128,7 +138,7 @@ export default function ProfessorTable({
         </Table>
       </TableContainer>
       <Pagination
-        count={Math.ceil(filteredProfessors.length / itemsPerPage)} // Total de páginas
+        count={Math.ceil(filteredProfessors.length / itemsPerPage)}
         page={currentPage}
         onChange={handlePageChange}
         sx={{ mt: 2, display: "flex", justifyContent: "center" }}

@@ -6,7 +6,6 @@ interface DataTableRowProps {
     name: string;
     email: string;
     titration: string;
-    registrationNumber: string;
     unitId: string;
     lattes: string;
     reference: string;
@@ -25,13 +24,12 @@ export default function DataTableRow({
     name: <BodyText text={data.name} />,
     email: <BodyText text={data.email} />,
     titration: <BodyText text={data.titration} />,
-    registrationNumber: <BodyText text={data.registrationNumber} />,
     unitId: <BodyText text={data.unitId} />,
     lattes: <BodyText text={data.lattes} />,
     reference: <BodyText text={data.reference} />,
     notes: <BodyText text={data.notes} />,
     activityStatus: <BodyText text={data.activityStatus} />,
-    courses: <BodyText text={data.courses.join(", ")} />,
+    courses: <BodyText text={(Array.isArray(data.courses) ? data.courses.join(", ") : "")} />,
     actions: (
       <Box sx={{ display: "flex", gap: 1 }}>
         <Button variant="outlined" color="primary" size="small">

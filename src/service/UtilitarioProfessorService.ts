@@ -20,6 +20,7 @@ const useProfessors = () => {
         }));
 
         setProfessors(formattedProfessors);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (err) {
         setError('Falha ao carregar os professores');
       } finally {
