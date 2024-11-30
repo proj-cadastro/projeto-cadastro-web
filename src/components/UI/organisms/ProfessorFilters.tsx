@@ -20,8 +20,9 @@ export default function ProfessorFilters({
   const handleTitulacoesChange = (selected: string[]) =>
     setFilters({ ...filters, titulacoes: selected });
 
-  const handleStatusChange = (value: boolean) =>
+  const handleStatusChange = (value: string) => {
     setFilters({ ...filters, status: value });
+  };
 
   return (
     <Box
@@ -53,9 +54,12 @@ export default function ProfessorFilters({
         onChange={handleTitulacoesChange}
         label="Filtrar por Titulação"
       />
+
       <ToggleFilter
-        value={filters.status}
-        onChange={handleStatusChange}
+        value={filters.status === "Ativo"}
+        onChange={(isActive) =>
+          handleStatusChange(isActive ? "Ativo" : "Inativo")
+        }
         label="Somente Ativos"
       />
     </Box>
