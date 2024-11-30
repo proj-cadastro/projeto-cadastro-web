@@ -31,7 +31,7 @@ const useProfessors = () => {
     fetchProfessors();
   }, []); // Esse useEffect vai rodar apenas uma vez, no carregamento inicial
 
-  return { professors, loading, error };
+  return { professors, loading, error, setProfessors };
 };
 
 export default useProfessors;

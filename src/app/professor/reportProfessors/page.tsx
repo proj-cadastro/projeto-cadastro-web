@@ -88,7 +88,6 @@ export default function ReportProfessors() {
         }}
       >
         <ProfessorTable
-          professors={professors}
           visibleColumns={visibleColumns}
           setVisibleColumns={setVisibleColumns}
           COLUMN_OPTIONS={COLUMN_OPTIONS}

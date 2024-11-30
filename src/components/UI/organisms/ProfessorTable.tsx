@@ -12,9 +12,10 @@ import TableHeader from "../molecules/TableHeader";
 import ColumnVisibilityControl from "../molecules/ColumnVisibilityControl";
 import ProfessorFilters from "./ProfessorFilters";
 import { IProfessor } from "../../../interfaces/IProfessors";
+import { ProfessorService } from "@/service/Service";
+import useProfessors from "@/service/UtilitarioProfessorService";
 
 interface ProfessorTableProps {
-  professors: { value: IProfessor; label: string }[];
   visibleColumns: string[];
   setVisibleColumns: (columns: string[]) => void;
   COLUMN_OPTIONS: string[];
@@ -22,7 +23,6 @@ interface ProfessorTableProps {
 }
 
 export default function ProfessorTable({
-  professors,
   visibleColumns,
   setVisibleColumns,
   COLUMN_OPTIONS,
@@ -41,6 +41,8 @@ export default function ProfessorTable({
     titulacoes: [],
     status: "",
   });
+
+  const {professors, setProfessors} = useProfessors();
 
   const filteredProfessors = professors.filter((professor) => {
     console.log("Professor atual:", professor); 
@@ -94,6 +96,23 @@ export default function ProfessorTable({
     setVisibleColumns(updatedColumns);
   };
 
+  const handleDeleteProfessor = async (professorId: string) => {
+    try {
+      await ProfessorService.deletar(professorId);
+  
+      // Após a exclusão no backend, atualize a lista localmente
+      const updatedProfessorList = professors.filter(
+        (professor) => professor.value._id !== professorId
+      );
+      setProfessors(updatedProfessorList); 
+    } catch (error) {
+      console.error("Erro ao excluir professor:", error);
+      // Aqui você pode adicionar um feedback visual, como uma mensagem de erro
+    }
+  };
+  
+
+
   return (
     <Box
       sx={{
@@ -132,6 +151,7 @@ export default function ProfessorTable({
                 key={professor.value._id} 
                 data={professor.value}
                 visibleColumns={visibleColumns}
+                onDelete = {handleDeleteProfessor}
               />
             ))}
           </TableBody>
