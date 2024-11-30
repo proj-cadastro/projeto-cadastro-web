@@ -1,4 +1,8 @@
+import { ProfessorService } from "@/service/Service";
 import { FieldConfig } from "../organisms/DynamicForm";
+
+const professoresCadastrados = ProfessorService.listarTodos
+
 
 export const courseFields: FieldConfig[] = [
     {
@@ -20,7 +24,7 @@ export const courseFields: FieldConfig[] = [
         label: "Disciplinas",
         type: "select",
         options: [
-            { value: "Matemática", label: "Matemática" },
+            { value: ["Matemática"], label: "Matemática" },
             { value: "Física", label: "Física" },
             { value: "Química", label: "Química" },
         ],
@@ -38,32 +42,24 @@ export const courseFields: FieldConfig[] = [
         label: "Modelo do Curso",
         type: "select",
         options: [
-            { value: "Presencial", label: "Presencial" },
-            { value: "EAD", label: "EAD" },
-            { value: "Híbrido", label: "Híbrido" },
+            { value: "in-person", label: "Presencial" },
+            { value: "home-school", label: "EAD" },
+            { value: "blended", label: "Híbrido" },
         ],
         required: true,
     },
     {
         id: "professors",
         label: "Professores",
-        type: "select",
-        options: [
-            { value: "Professor A", label: "Professor A" },
-            { value: "Professor B", label: "Professor B" },
-            { value: "Professor C", label: "Professor C" },
-        ],
+        type: "checkbox",
+        options: [],
         required: true,
     },
     {
         id: "coordinator",
         label: "Coordenador",
         type: "select",
-        options: [
-            { value: "Professor A", label: "Professor A" },
-            { value: "Professor B", label: "Professor B" },
-            { value: "Professor C", label: "Professor C" },
-        ],
+        options: [],
         required: true,
     },
 ];

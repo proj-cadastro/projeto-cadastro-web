@@ -2,7 +2,7 @@ export interface Filters {
     search: string;
     courses: string[];
     titulacoes: string[];
-    status: boolean;
+    status: string;
   }
   
   export interface ProfessorFiltersProps {
