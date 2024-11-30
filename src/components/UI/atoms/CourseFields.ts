@@ -24,7 +24,7 @@ export const courseFields: FieldConfig[] = [
         label: "Disciplinas",
         type: "select",
         options: [
-            { value: "Matemática", label: "Matemática" },
+            { value: ["Matemática"], label: "Matemática" },
             { value: "Física", label: "Física" },
             { value: "Química", label: "Química" },
         ],

@@ -1,9 +1,10 @@
+// useProfessors.ts
 import { IProfessor } from '@/interfaces/IProfessors';
 import { useState, useEffect } from 'react';
 import { ProfessorService } from './Service';
 
 const useProfessors = () => {
-  const [professors, setProfessors] = useState<{ value: IProfessor; label: string }[]>([]);
+  const [professors, setProfessors] = useState<{ label: string, value: any }[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -13,10 +14,9 @@ const useProfessors = () => {
         const response = await ProfessorService.listarTodos();
         const professorsData: IProfessor[] = response.data;
 
-        // Formatando os dados para o formato necessário
-        const formattedProfessors = professorsData.map(professor => ({
-          value: professor, // Valor completo do objeto professor
-          label: professor.name, // Nome do professor para exibir no dropdown
+        const formattedProfessors = professorsData.map((professor) => ({
+          label: professor.name,
+          value: professor, // O objeto professor completo, pois precisa ser enviado para o backend
         }));
 
         setProfessors(formattedProfessors);
@@ -28,7 +28,7 @@ const useProfessors = () => {
     };
 
     fetchProfessors();
-  }, []);
+  }, []); // Esse useEffect vai rodar apenas uma vez, no carregamento inicial
 
   return { professors, loading, error };
 };

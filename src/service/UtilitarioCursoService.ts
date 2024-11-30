@@ -3,7 +3,7 @@ import { CourseService } from './Service';
 import { ICourse } from '@/interfaces/ICourses';
 
 const useCourses = () => {
-  const [courses, setCourses] = useState<{ value: string, label: string }[]>([]);
+  const [courses, setCourses] = useState<{ value: any, label: string }[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -12,7 +12,7 @@ const useCourses = () => {
     const fetchCourses = async () => {
       try {
         const response = await CourseService.listarTodos(); // Substitua pela URL da sua API
-        const coursesData: ICourse[] = await response.data;
+        const coursesData: ICourse[] =  response.data;
 
         // Formatando os dados para o formato necessário
         const formattedCourses = coursesData.map(course => ({

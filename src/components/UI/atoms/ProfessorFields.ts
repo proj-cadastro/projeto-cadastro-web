@@ -1,6 +1,5 @@
 //variável utilizada para mapear os inputs e seus tipos no formulário
 import { FieldConfig } from "../organisms/DynamicForm";
-import useCourses from "@/service/UtilitarioCursoService";
 //transformar cursosCadastrados em dicionário
 // -> label: value
 // -> DSM: _ID
@@ -65,7 +64,7 @@ export const professorFields: FieldConfig[] = [
     {
         id: "notes",
         label: "Observações",
-        type: "textarea",
+        type: "text",
         placeholder: "Observações",
     },
 
@@ -84,8 +83,8 @@ export const professorFields: FieldConfig[] = [
     {
         id: "coursesId",
         label: "Cursos Relacionados",
-        type: "select",
-        options: [{value: "arroz", label: "arroz"}],
+        type: "checkbox",
+        options: [],
         required: true,
     },
 ];

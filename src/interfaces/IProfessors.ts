@@ -1,11 +1,10 @@
 import { ICourse } from "./ICourses";
 
 export interface IProfessor {
-  id: string;
+  _id: string;
   name: string;
   email: string;
   titration: string;
-  registrationNumber: string;
   unitId: string;
   lattes: string;
   reference: string;
