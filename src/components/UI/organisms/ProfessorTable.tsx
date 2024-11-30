@@ -11,7 +11,6 @@ import DataTableRow from "../molecules/TableRow";
 import TableHeader from "../molecules/TableHeader";
 import ColumnVisibilityControl from "../molecules/ColumnVisibilityControl";
 import ProfessorFilters from "./ProfessorFilters";
-import { IProfessor } from "../../../interfaces/IProfessors";
 import { ProfessorService } from "@/service/Service";
 import useProfessors from "@/service/UtilitarioProfessorService";
 
