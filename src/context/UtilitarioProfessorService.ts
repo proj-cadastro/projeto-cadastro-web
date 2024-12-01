@@ -1,12 +1,7 @@
-// useProfessors.ts
 import { IProfessor } from "@/interfaces/IProfessors";
 import { useState, useEffect } from "react";
 import { ProfessorService } from "../service/Service";
-
-interface ISpecialty {
-  specialty: string;
-  count: number;
-}
+import { ISpecialty } from "@/interfaces/ISpecialty";
 
 const useProfessors = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
