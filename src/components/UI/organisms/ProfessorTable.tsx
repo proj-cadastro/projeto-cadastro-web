@@ -13,6 +13,7 @@ import ColumnVisibilityControl from "../molecules/ColumnVisibilityControl";
 import ProfessorFilters from "./ProfessorFilters";
 import { ProfessorService } from "@/service/Service";
 import useProfessors from "@/service/UtilitarioProfessorService";
+import useCourses from "@/service/UtilitarioCursoService";
 
 interface ProfessorTableProps {
   visibleColumns: string[];
@@ -41,37 +42,44 @@ export default function ProfessorTable({
     status: "",
   });
 
-  const {professors, setProfessors} = useProfessors();
+  const { professors, setProfessors } = useProfessors();
+  const { courses } = useCourses();
+
+  const courseMap = courses.reduce<Record<string, string>>((acc, course) => {
+    acc[course.value] = course.label;
+    return acc;
+  }, {});
 
   const filteredProfessors = professors.filter((professor) => {
-    console.log("Professor atual:", professor); 
-
     const profValue = professor.value;
+
+    const professorCourseIds = Array.isArray(profValue.coursesId)
+      ? profValue.coursesId
+      : [];
 
     const matchesSearch =
       profValue.name.toLowerCase().includes(filters.search.toLowerCase()) ||
       profValue.email.toLowerCase().includes(filters.search.toLowerCase());
-    console.log("Matches Search:", matchesSearch);
+
+    const filteredCourseIds = filters.courses.map((courseName) =>
+      Object.keys(courseMap).find((id) => courseMap[id] === courseName)
+    );
 
     const matchesCourses =
       filters.courses.length === 0 ||
-      filters.courses.some((course) => profValue.courses.includes(course));
-    console.log("Matches Courses:", matchesCourses);
+      filteredCourseIds.some((courseId) =>
+        professorCourseIds.includes(courseId!)
+      );
 
     const matchesTitration =
       filters.titulacoes.length === 0 ||
       filters.titulacoes.includes(profValue.titration);
-    console.log("Matches Titration:", matchesTitration);
 
     const matchesStatus =
       filters.status === "" || profValue.activityStatus === filters.status;
 
-    console.log("Matches Status:", matchesStatus); 
-
     return matchesSearch && matchesCourses && matchesTitration && matchesStatus;
   });
-
-  console.log("Professores filtrados", filteredProfessors.length);
 
   const startIndex = (currentPage - 1) * itemsPerPage;
 
@@ -98,19 +106,17 @@ export default function ProfessorTable({
   const handleDeleteProfessor = async (professorId: string) => {
     try {
       await ProfessorService.deletar(professorId);
-  
+
       // Após a exclusão no backend, atualize a lista localmente
       const updatedProfessorList = professors.filter(
         (professor) => professor.value._id !== professorId
       );
-      setProfessors(updatedProfessorList); 
+      setProfessors(updatedProfessorList);
     } catch (error) {
       console.error("Erro ao excluir professor:", error);
       // Aqui você pode adicionar um feedback visual, como uma mensagem de erro
     }
   };
-  
-
 
   return (
     <Box
@@ -127,7 +133,7 @@ export default function ProfessorTable({
       <ProfessorFilters
         filters={filters}
         setFilters={setFilters}
-        availableCourses={["DSM", "CO", "CDN"]}
+        availableCourses={courses.map((course) => course.label)}
         availableTitulacoes={["Doutor", "Mestre"]}
       />
 
@@ -147,10 +153,11 @@ export default function ProfessorTable({
           <TableBody>
             {currentPageItems.map((professor) => (
               <DataTableRow
-                key={professor.value._id} 
+                key={professor.value._id}
                 data={professor.value}
                 visibleColumns={visibleColumns}
-                onDelete = {handleDeleteProfessor}
+                onDelete={handleDeleteProfessor}
+                courseMap={courseMap}
               />
             ))}
           </TableBody>

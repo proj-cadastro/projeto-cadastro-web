@@ -36,10 +36,8 @@ export default function ReportProfessors() {
     "actions",
   ]);
 
-  const { professors, loading, error } = useProfessors(); 
+  const { loading, error } = useProfessors();
 
-  console.log("Professores carregados:", professors);
-    
   if (loading) {
     return (
       <Container
@@ -51,7 +49,7 @@ export default function ReportProfessors() {
           justifyContent: "center",
         }}
       >
-        <CircularProgress /> 
+        <CircularProgress />
       </Container>
     );
   }
@@ -67,7 +65,7 @@ export default function ReportProfessors() {
           justifyContent: "center",
         }}
       >
-        <div>{error}</div> 
+        <div>{error}</div>
       </Container>
     );
   }
