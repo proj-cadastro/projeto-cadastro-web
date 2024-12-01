@@ -12,7 +12,7 @@ export default function Footer() {
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: "#fff9",
+        backgroundColor: "#fff",
         color: "#fff",
         py: 2,
         textAlign: "center",

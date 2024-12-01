@@ -7,12 +7,18 @@ import TitleRegister from "@/components/UI/atoms/TitleRegister";
 import { professorFields } from "@/components/UI/atoms/ProfessorFields";
 import { ProfessorService } from "@/service/Service";
 import useCourses from "@/service/UtilitarioCursoService";
+import { Box, CircularProgress, Container } from "@mui/material";
+import Navbar from "@/components/UI/organisms/Navbar";
+import Footer from "@/components/UI/organisms/Footer";
 
-export default function EditProfessors({ params }: { params: Promise<{ id: string }> }) {
+export default function EditProfessors({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
   const [id, setId] = useState<string | null>(null); // Estado para armazenar o id
   const [professor, setProfessor] = useState<IProfessor | null>(null); // Estado para armazenar os dados do professor
   const { courses, loading } = useCourses();
-
 
   // Desembrulhando a Promise
   useEffect(() => {
@@ -41,37 +47,57 @@ export default function EditProfessors({ params }: { params: Promise<{ id: strin
   }, [id]);
 
   // Função de envio de dados para o backend
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const putProfessor = (data: Record<string, any>) => {
-    if (id)
-      ProfessorService.atualizar(id, data)
-      console.log("Dados enviados:", data);
-
+    if (id) ProfessorService.atualizar(id, data);
+    console.log("Dados enviados:", data);
   };
 
   const retornaProfessor = () => {
-    return professor || {}; 
+    return professor || {};
   };
 
   const updatedFields = professorFields.map((field) => {
     if (field.id === "coursesId") {
       return {
         ...field,
-        options: courses , // Passando os cursos carregados
+        options: courses, // Passando os cursos carregados
       };
     }
     return field;
   });
 
-  if (!professor) {
-    return <div>Carregando...</div>; // Exibe uma mensagem enquanto os dados estão sendo carregados
+  if (loading) {
+    return (
+      <Container
+        sx={{
+          height: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <CircularProgress />
+      </Container>
+    );
   }
 
   return (
-    <DynamicForm
-      title={<TitleRegister text="Edição de Professores" subText="Fatec Votorantim" />}
-      fields={updatedFields}
-      onSubmit={putProfessor} // Passa a função putProfessor para o onSubmit
-      initialValues={retornaProfessor()} // Passa os dados do professor para o formulário
-    />
+    <Box>
+      <Navbar />
+      <DynamicForm
+        title={
+          <TitleRegister
+            text="Edição de Professores"
+            subText="Fatec Votorantim"
+          />
+        }
+        fields={updatedFields}
+        onSubmit={putProfessor} // Passa a função putProfessor para o onSubmit
+        initialValues={retornaProfessor()} // Passa os dados do professor para o formulário
+      />
+      <Footer />
+    </Box>
   );
 }
