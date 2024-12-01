@@ -6,9 +6,19 @@ interface InputFieldProps {
   type?: string;
   autoFocus?: boolean;
   placeholder?: string;
+  value: string; // Adicionando a prop value
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void; // Adicionando a prop onChange
 }
 
-export default function InputField({ id, label, type = "text", autoFocus = false, placeholder }: InputFieldProps) {
+export default function InputField({
+  id,
+  label,
+  type = "text",
+  autoFocus = false,
+  placeholder,
+  value, // Recebendo a prop value
+  onChange, // Recebendo a prop onChange
+}: InputFieldProps) {
   return (
     <TextField
       margin="normal"
@@ -20,6 +30,8 @@ export default function InputField({ id, label, type = "text", autoFocus = false
       type={type}
       autoFocus={autoFocus}
       placeholder={placeholder}
+      value={value} // Passando o value para o TextField
+      onChange={onChange} // Passando o onChange para o TextField
     />
   );
 }

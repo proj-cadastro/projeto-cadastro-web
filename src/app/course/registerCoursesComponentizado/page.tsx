@@ -10,8 +10,9 @@ import useProfessors from "@/service/UtilitarioProfessorService";
 import { Box, CircularProgress, Container } from "@mui/material";
 import Navbar from "@/components/UI/organisms/Navbar";
 import Footer from "@/components/UI/organisms/Footer";
+import auth from "@/components/HOCS/auth"; // Importando o HOC de autenticação
 
-export default function RegisterCoursesComponentizado() {
+function RegisterCoursesComponentizado() {
   const { professors, loading } = useProfessors();
 
   const updatedFields = courseFields.map((field) => {
@@ -19,7 +20,7 @@ export default function RegisterCoursesComponentizado() {
       return {
         ...field,
         options: professors.map((option) => ({
-          ...option, // Inclui { value: professor, label: name, key: uniqueKey }
+          ...option,
         })),
       };
     }
@@ -41,6 +42,7 @@ export default function RegisterCoursesComponentizado() {
       </Container>
     );
   }
+
   return (
     <Box>
       <Navbar />
@@ -55,3 +57,5 @@ export default function RegisterCoursesComponentizado() {
     </Box>
   );
 }
+
+export default auth(RegisterCoursesComponentizado);

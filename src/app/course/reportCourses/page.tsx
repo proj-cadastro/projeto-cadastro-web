@@ -6,6 +6,7 @@ import Footer from "@/components/UI/organisms/Footer";
 import CoursesTable from "../../../components/UI/organisms/CoursesTable";
 import { Container, Box } from "@mui/material";
 import { mockCourses } from "../../../utils/mockCourses";
+import auth from "@/components/HOCS/auth"; // Importando o HOC de autenticação
 
 const COLUMN_LABELS: Record<string, string> = {
   name: "Name",
@@ -20,7 +21,7 @@ const COLUMN_LABELS: Record<string, string> = {
 
 const COLUMN_OPTIONS = Object.keys(COLUMN_LABELS);
 
-export default function ReportCourses() {
+function ReportCourses() {
   const [visibleColumns, setVisibleColumns] = useState<string[]>([
     "name",
     "codCourse",
@@ -63,3 +64,5 @@ export default function ReportCourses() {
     </Container>
   );
 }
+
+export default auth(ReportCourses);

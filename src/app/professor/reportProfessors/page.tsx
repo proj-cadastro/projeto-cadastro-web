@@ -6,6 +6,7 @@ import Navbar from "@/components/UI/organisms/Navbar";
 import Footer from "@/components/UI/organisms/Footer";
 import { Container, Box, CircularProgress } from "@mui/material";
 import useProfessors from "@/service/UtilitarioProfessorService";
+import auth from "@/components/HOCS/auth";
 
 const COLUMN_LABELS: Record<string, string> = {
   name: "Nome",
@@ -22,7 +23,7 @@ const COLUMN_LABELS: Record<string, string> = {
 
 const COLUMN_OPTIONS = Object.keys(COLUMN_LABELS);
 
-export default function ReportProfessors() {
+function ReportProfessors() {
   const [visibleColumns, setVisibleColumns] = useState<string[]>([
     "name",
     "email",
@@ -98,3 +99,5 @@ export default function ReportProfessors() {
     </Container>
   );
 }
+
+export default auth(ReportProfessors);

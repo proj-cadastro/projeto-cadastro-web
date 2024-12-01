@@ -4,8 +4,9 @@ import { Box, Card, Container } from "@mui/material";
 import Chart from "@/components/UI/molecules/Chart";
 import { data, options } from "../../utils/mockChart";
 import Navbar from "@/components/UI/organisms/Navbar";
+import auth from "../../components/HOCS/auth";
 
-export default function Home() {
+const Home = () => {
   return (
     <Container
       sx={{
@@ -48,4 +49,6 @@ export default function Home() {
       <Footer />
     </Container>
   );
-}
+};
+
+export default auth(Home);

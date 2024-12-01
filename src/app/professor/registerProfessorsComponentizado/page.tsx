@@ -3,15 +3,15 @@
 import React from "react";
 import DynamicForm from "@/components/UI/organisms/DynamicForm";
 import TitleRegister from "@/components/UI/atoms/TitleRegister";
-
 import { professorFields } from "@/components/UI/atoms/ProfessorFields";
 import { ProfessorService } from "@/service/Service";
 import useCourses from "@/service/UtilitarioCursoService";
 import { Box, CircularProgress, Container } from "@mui/material";
 import Navbar from "@/components/UI/organisms/Navbar";
 import Footer from "@/components/UI/organisms/Footer";
+import auth from "@/components/HOCS/auth"; // Importando o HOC de autenticação
 
-export default function RegisterProfessorsComponentizado() {
+function RegisterProfessorsComponentizado() {
   const { courses, loading } = useCourses();
 
   if (loading) {
@@ -57,3 +57,6 @@ export default function RegisterProfessorsComponentizado() {
     </Box>
   );
 }
+
+// Envolvendo o componente com o HOC de autenticação
+export default auth(RegisterProfessorsComponentizado);

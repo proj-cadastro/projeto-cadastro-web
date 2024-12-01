@@ -1,13 +1,14 @@
 import { Box, Container } from "@mui/material";
-import LogoImage from "../atoms/Logo";
-import LoginForm from "../molecules/LoginForm";
-import RegisterPrompt from "../molecules/RegisterPrompt";
+import LogoImage from "../atoms/Logo"; // Ajuste o caminho se necessário
+import LoginForm from "../molecules/LoginForm"; // Ajuste o caminho se necessário
+import RegisterPrompt from "../molecules/RegisterPrompt"; // Ajuste o caminho se necessário
 
 interface LoginCardProps {
-  href: string;
+  onLogin: (credentials: { email: string; password: string }) => Promise<void>;
+  error: string;
 }
 
-export default function LoginCard({ href }: LoginCardProps) {
+export default function LoginCard({ onLogin, error }: LoginCardProps) {
   return (
     <Container
       component="main"
@@ -27,40 +28,13 @@ export default function LoginCard({ href }: LoginCardProps) {
           textAlign: "center",
         }}
       >
-        <Box
-          sx={{
-            mb: 2,
-            width: "100%",
-            height: "20%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
+        <Box sx={{ mb: 2 }}>
           <LogoImage />
         </Box>
-        <Box
-          sx={{
-            mb: 2,
-            width: "100%",
-            height: "20%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            
-          }}
-        >
-          <LoginForm href={href} />
+        <Box sx={{ mb: 2 }}>
+          <LoginForm onLogin={onLogin} error={error} /> {/* Passa o onLogin e error para LoginForm */}
         </Box>
-        <Box
-          sx={{
-            width: "100%",
-            height: "20%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
+        <Box>
           <RegisterPrompt />
         </Box>
       </Box>

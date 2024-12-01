@@ -6,14 +6,17 @@ export default function RegisterPrompt() {
   return (
     <Box
       sx={{
-        width:"100%",
+        width: "100%",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
       }}
     >
       <BodyText text="Ainda não possui uma conta?" />
-      <StyledLink text="Cadastre-se aqui!" href="/user/register" />
+      <StyledLink
+        text="Cadastre-se aqui!"
+        href="/user/registerComponentizado"
+      />
     </Box>
   );
 }

@@ -2,17 +2,18 @@ import { Button } from "@mui/material";
 
 interface PrimaryButtonProps {
   text: string;
-  href: string;
+  href?: string;
+  type?: "button" | "submit" | "reset"; // Adicionando a prop type
 }
 
-export default function PrimaryButton({ text, href }: PrimaryButtonProps) {
+export default function PrimaryButton({ text, href, type = "button" }: PrimaryButtonProps) {
   return (
     <Button
+      type={type} // Passando a prop type para o Button
       variant="contained"
       color="primary"
-      size="large"
       href={href}
-      sx={{ width: "100%", maxWidth: 200 }}
+      fullWidth
     >
       {text}
     </Button>

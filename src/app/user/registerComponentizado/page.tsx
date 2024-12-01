@@ -11,7 +11,6 @@ export default function registerComponentizado() {
 
     const postUser = (data: Partial<IUser>) => {
         
-        //pode ser utilizado esse método para validações...
   
       }
 
