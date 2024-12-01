@@ -1,9 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import axios from "axios";
-
-const api = axios.create({
-  baseURL: "https://projeto-cadastro-api.onrender.com/", // URL base da API
-});
+import api from "./axiosConfig";
 
 const UserService = {
   listarTodos: () => api.get("/users"),
@@ -11,7 +7,7 @@ const UserService = {
   buscarPorId: (id: string) => api.get(`/users/${id}`),
   deletar: (id: string) => api.delete(`/users/${id}`),
   login: (credentials: { email: string; password: string }) =>
-    api.post("/auth/login", credentials), // Método de login
+    api.post("/auth/login", credentials),
 };
 
 // Serviços para Professors

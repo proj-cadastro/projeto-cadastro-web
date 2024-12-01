@@ -6,7 +6,7 @@ import { IProfessor } from "@/interfaces/IProfessors";
 import TitleRegister from "@/components/UI/atoms/TitleRegister";
 import { professorFields } from "@/components/UI/atoms/ProfessorFields";
 import { ProfessorService } from "@/service/Service";
-import useCourses from "@/service/UtilitarioCursoService";
+import useCourses from "../../../../service/UtilitarioCursoService";
 import { Box, CircularProgress, Container } from "@mui/material";
 import Navbar from "@/components/UI/organisms/Navbar";
 import Footer from "@/components/UI/organisms/Footer";
@@ -18,7 +18,7 @@ export default function EditProfessors({
 }) {
   const [id, setId] = useState<string | null>(null); // Estado para armazenar o id
   const [professor, setProfessor] = useState<IProfessor | null>(null); // Estado para armazenar os dados do professor
-  const { courses, loading } = useCourses();
+  const { courses } = useCourses();
 
   // Desembrulhando a Promise
   useEffect(() => {
@@ -67,7 +67,7 @@ export default function EditProfessors({
     return field;
   });
 
-  if (loading) {
+  if (!professor) {
     return (
       <Container
         sx={{
