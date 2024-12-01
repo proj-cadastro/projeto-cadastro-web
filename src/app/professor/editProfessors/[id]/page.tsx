@@ -6,7 +6,7 @@ import { IProfessor } from "@/interfaces/IProfessors";
 import TitleRegister from "@/components/UI/atoms/TitleRegister";
 import { professorFields } from "@/components/UI/atoms/ProfessorFields";
 import { ProfessorService } from "@/service/Service";
-import useCourses from "../../../../service/UtilitarioCursoService";
+import useCourses from "../../../../context/UtilitarioCursoService";
 import { Box, CircularProgress, Container } from "@mui/material";
 import Navbar from "@/components/UI/organisms/Navbar";
 import Footer from "@/components/UI/organisms/Footer";

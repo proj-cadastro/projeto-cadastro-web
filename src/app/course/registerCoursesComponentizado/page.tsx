@@ -6,7 +6,7 @@ import TitleRegister from "@/components/UI/atoms/TitleRegister";
 
 import { courseFields } from "@/components/UI/atoms/CourseFields";
 import { CourseService } from "@/service/Service";
-import useProfessors from "@/service/UtilitarioProfessorService";
+import useProfessors from "@/context/UtilitarioProfessorService";
 import { Box, CircularProgress, Container } from "@mui/material";
 import Navbar from "@/components/UI/organisms/Navbar";
 import Footer from "@/components/UI/organisms/Footer";
