@@ -12,8 +12,8 @@ import TableHeader from "../molecules/TableHeader";
 import ColumnVisibilityControl from "../molecules/ColumnVisibilityControl";
 import ProfessorFilters from "./ProfessorFilters";
 import { ProfessorService } from "@/service/Service";
-import useProfessors from "@/service/UtilitarioProfessorService";
-import useCourses from "@/service/UtilitarioCursoService";
+import useProfessors from "@/context/UtilitarioProfessorService";
+import useCourses from "@/context/UtilitarioCursoService";
 
 interface ProfessorTableProps {
   visibleColumns: string[];

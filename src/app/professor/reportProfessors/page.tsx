@@ -5,7 +5,7 @@ import ProfessorTable from "@/components/UI/organisms/ProfessorTable";
 import Navbar from "@/components/UI/organisms/Navbar";
 import Footer from "@/components/UI/organisms/Footer";
 import { Container, Box, CircularProgress } from "@mui/material";
-import useProfessors from "@/service/UtilitarioProfessorService";
+import useProfessors from "@/context/UtilitarioProfessorService";
 import auth from "@/components/HOCS/auth";
 
 const COLUMN_LABELS: Record<string, string> = {
