@@ -42,11 +42,17 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
 }) => {
     const [formData, setFormData] = useState<Record<string, any>>(() => {
         return fields.reduce<Record<string, any>>((acc, field) => {
-            // Se for checkbox, inicializa como array vazio, senão, como string vazia
-            acc[field.id] = field.type === "checkbox" ? [] : initialValues[field.id] || "";
+            // Se for checkbox, inicializa como array vazio ou com os valores de initialValues
+            if (field.type === "checkbox") {
+                acc[field.id] = initialValues[field.id] || [];
+            } else {
+                // Para outros tipos de campos, inicializa com o valor de initialValues ou string vazia
+                acc[field.id] = initialValues[field.id] || "";
+            }
             return acc;
         }, {});
     });
+    
 
     const handleChange = (id: string, value: any) => {
         setFormData((prev) => ({ ...prev, [id]: value }));

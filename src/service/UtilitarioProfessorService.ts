@@ -20,7 +20,6 @@ const useProfessors = () => {
         }));
 
         setProfessors(formattedProfessors);
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (err) {
         setError('Falha ao carregar os professores');
       } finally {
@@ -29,8 +28,7 @@ const useProfessors = () => {
     };
 
     fetchProfessors();
-  }, []); // Esse useEffect vai rodar apenas uma vez, no carregamento inicial
-
+  }, []); 
   return { professors, loading, error, setProfessors };
 };
 
