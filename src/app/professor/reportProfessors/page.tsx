@@ -28,11 +28,6 @@ export default function ReportProfessors() {
     "email",
     "lattes",
     "courses",
-    "titration",
-    "unitId",
-    "reference",
-    "notes",
-    "activityStatus",
     "actions",
   ]);
 

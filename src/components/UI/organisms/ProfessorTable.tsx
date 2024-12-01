@@ -96,25 +96,43 @@ export default function ProfessorTable({
   };
 
   const handleColumnVisibilityChange = (selectedColumns: string[]) => {
-    const updatedColumns = [
-      ...selectedColumns.filter((col) => col !== "actions"),
+    // Define a ordem original das colunas
+    const originalOrder = [
+      "name",
+      "email",
+      "lattes",
+      "courses",
+      "titration",
+      "unitId",
+      "reference",
+      "notes",
+      "activityStatus",
       "actions",
     ];
-    setVisibleColumns(updatedColumns);
+
+    // Adiciona a coluna de ações no final, se selecionada
+    const updatedColumns = selectedColumns.includes("actions")
+      ? selectedColumns
+      : [...selectedColumns, "actions"];
+
+    // Filtra as colunas visíveis na ordem original
+    const orderedColumns = originalOrder.filter((col) =>
+      updatedColumns.includes(col)
+    );
+
+    setVisibleColumns(orderedColumns);
   };
 
   const handleDeleteProfessor = async (professorId: string) => {
     try {
       await ProfessorService.deletar(professorId);
 
-      // Após a exclusão no backend, atualize a lista localmente
       const updatedProfessorList = professors.filter(
         (professor) => professor.value._id !== professorId
       );
       setProfessors(updatedProfessorList);
     } catch (error) {
       console.error("Erro ao excluir professor:", error);
-      // Aqui você pode adicionar um feedback visual, como uma mensagem de erro
     }
   };
 
