@@ -42,7 +42,6 @@ jobs:
             git tag -a v0.0.0 -m "Initial release"
             git push origin v0.0.0
           fi
-
       - name: Calcular nova versão
         id: version
         run: |
@@ -91,7 +90,6 @@ jobs:
           
           echo "Nova versão: $NEW_VERSION"
           echo "::set-output name=NEW_VERSION::$NEW_VERSION"
-
       - name: Atualizar versão no package.json (se necessário)
         run: |
           CURRENT_VERSION=$(jq -r '.version' package.json)
@@ -112,7 +110,6 @@ jobs:
           # Debug: Verificar se GH_TOKEN está definido
           echo "GH_TOKEN is set"
           echo "Token length: ${#GH_TOKEN}"
-
           # Verifica as remotas configuradas
           git remote -v
           
@@ -135,18 +132,3 @@ jobs:
             echo "Nenhuma mudança para commitar. Workflow concluído sem alterações."
             exit 0
           fi
-           - name: Efetuar login no Docker Hub
-           uses: docker/login-action@v2
-          with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Criar imagem Docker
-        run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/projeto-cadastro-web:${{ steps.version.outputs.NEW_VERSION }} .
-          docker tag ${{ secrets.DOCKERHUB_USERNAME }}/projeto-cadastro-web:${{ steps.version.outputs.NEW_VERSION }} ${{ secrets.DOCKERHUB_USERNAME }}/projeto-cadastro-web:latest
-
-      - name: Efetuar push da imagem
-        run: |
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/projeto-cadastro-web:${{ steps.version.outputs.NEW_VERSION }}
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/projeto-cadastro-web:latest
