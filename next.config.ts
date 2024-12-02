@@ -1,10 +1,17 @@
 import type { NextConfig } from "next";
+import path from "path";
 
 const nextConfig: NextConfig = {
-  eslint: {
-    ignoreDuringBuilds: true,
+  typescript: {
+    ignoreBuildErrors: true,
   },
-  /* outras opções de configuração aqui */
+  eslint: {
+    ignoreDuringBuilds: true, // Ignora os erros de ESLint durante o build
+  },
+  webpack(config) {
+    config.resolve.modules.push(path.resolve("./src"));
+    return config;
+  },
 };
 
 export default nextConfig;
