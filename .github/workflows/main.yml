@@ -53,14 +53,21 @@ jobs:
           fi
           echo "Versão Atual: $LAST_TAG"
           
-          COMMITS=$(git log ${LAST_TAG}..HEAD --pretty=format:"%s")
+          if [ "$LAST_TAG" = "v0.0.0" ]; then
+            COMMITS=$(git log --pretty=format:"%s")
+          else
+            COMMITS=$(git log ${LAST_TAG}..HEAD --pretty=format:"%s")
+          fi
+          
           echo "Commits desde a última tag:"
           echo "$COMMITS"
           
+          # Inicializando variáveis
           MAJOR=0
           MINOR=0
           PATCH=0
           
+          # Analisando mensagens de commit
           for COMMIT in "$COMMITS"; do
             if [[ "$COMMIT" == *"BREAKING CHANGE"* ]]; then
               MAJOR=1
@@ -71,6 +78,7 @@ jobs:
             fi
           done
           
+          # Calculando a nova versão usando semver
           CURRENT_VERSION=${LAST_TAG#v}
           NEW_VERSION=$CURRENT_VERSION
           if [[ $MAJOR -eq 1 ]]; then
@@ -101,12 +109,22 @@ jobs:
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
           
-          git config --global remote.origin.url https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/<owner>/<repo>.git
+          # Debug: Verificar se GH_TOKEN está definido
+          echo "GH_TOKEN is set"
+          echo "Token length: ${#GH_TOKEN}"
+
+          # Verifica as remotas configuradas
+          git remote -v
           
+          # Configura a URL remota diretamente com o token de acesso
+          git config --global remote.origin.url https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/proj-cadastro/projeto-cadastro-web.git
+          
+          # Verifica se há mudanças para commitar
           if [ -n "$(git status --porcelain)" ]; then
             git add package.json package-lock.json yarn.lock
             git commit -m "chore(release): version ${{ steps.version.outputs.NEW_VERSION }}"
             
+            # Verifica se a tag já existe
             if git rev-parse "v${{ steps.version.outputs.NEW_VERSION }}" >/dev/null 2>&1; then
               echo "A tag v${{ steps.version.outputs.NEW_VERSION }} já existe. Não será recriada."
             else
@@ -116,19 +134,4 @@ jobs:
           else
             echo "Nenhuma mudança para commitar. Workflow concluído sem alterações."
             exit 0
-
-      - name: Efetuar login no Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Criar imagem Docker
-        run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/projeto-cadastro-web:${{ steps.version.outputs.NEW_VERSION }} .
-          docker tag ${{ secrets.DOCKERHUB_USERNAME }}/projeto-cadastro-web:${{ steps.version.outputs.NEW_VERSION }} ${{ secrets.DOCKERHUB_USERNAME }}/projeto-cadastro-web:latest
-
-      - name: Efetuar push da imagem
-        run: |
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/projeto-cadastro-web:${{ steps.version.outputs.NEW_VERSION }}
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/projeto-cadastro-web:latest
+          fi
