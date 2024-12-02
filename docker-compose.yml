@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  # Serviço Backend
+  backend:
+    build:
+      context: ../projeto-cadastro-api  
+    container_name: projetoBackend
+    ports:
+      - "3000:3000"  
+    depends_on:
+      - mongodb
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017/projeto_cadastro_db
+  
+  # Serviço Frontend
+  frontend:
+    build:
+      context: .  
+    container_name: projetoFrontend
+    ports:
+      - "3001:3000"  
+    depends_on:
+      - backend
+
+  # Serviço MongoDB
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+volumes:
+  mongodb_data:
