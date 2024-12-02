@@ -9,7 +9,7 @@ export default function ProfessorFilters({
   filters,
   setFilters,
   availableCourses,
-  availableTitulacoes,
+
 }: ProfessorFiltersProps) {
   const handleSearchChange = (value: string) =>
     setFilters({ ...filters, search: value });
@@ -17,12 +17,12 @@ export default function ProfessorFilters({
   const handleCoursesChange = (selected: string[]) =>
     setFilters({ ...filters, courses: selected });
 
-  const handleTitulacoesChange = (selected: string[]) =>
-    setFilters({ ...filters, titulacoes: selected });
+  // const handleTitulacoesChange = (selected: string[]) =>
+  //   setFilters({ ...filters, titulacoes: selected });
 
-  const handleStatusChange = (value: string) => {
-    setFilters({ ...filters, status: value });
-  };
+  // const handleStatusChange = (value: string) => {
+  //   setFilters({ ...filters, status: value });
+  // };
 
   return (
     <Box
@@ -48,20 +48,20 @@ export default function ProfessorFilters({
         onChange={handleCoursesChange}
         label="Filtrar por Cursos"
       />
-      <CheckboxFilter
+      {/* <CheckboxFilter
         options={availableTitulacoes}
         selectedOptions={filters.titulacoes}
         onChange={handleTitulacoesChange}
         label="Filtrar por Titulação"
-      />
+      /> */}
 
-      <ToggleFilter
+      {/* <ToggleFilter
         value={filters.status === "Ativo"}
         onChange={(isActive) =>
           handleStatusChange(isActive ? "Ativo" : "Inativo")
         }
         label="Somente Ativos"
-      />
+      /> */}
     </Box>
   );
 }

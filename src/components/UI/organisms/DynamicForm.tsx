@@ -25,6 +25,7 @@ export interface FieldConfig {
     placeholder?: string;
     options?: Array<{ value: any; label: string }>;
     required?: boolean;
+    transformValue?: (value: any) => any;
 }
 
 interface DynamicFormProps {
@@ -60,8 +61,17 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        onSubmit(formData);
+    
+        // Aplica transformações nos valores do formulário
+        const transformedData = fields.reduce<Record<string, any>>((acc, field) => {
+            const rawValue = formData[field.id];
+            acc[field.id] = field.transformValue ? field.transformValue(rawValue) : rawValue;
+            return acc;
+        }, {});
+    
+        onSubmit(transformedData); // Envia os dados transformados
     };
+    
 
     return (
         <Container
@@ -196,7 +206,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
 
                             <Box textAlign="center">
                                 <Button type="submit" variant="contained" sx={{ mt: 4 }}>
-                                    {initialValues.id ? "Atualizar" : "Cadastrar"}
+                                    {initialValues._id ? "Atualizar" : "Cadastrar"}
                                 </Button>
                             </Box>
                         </Box>

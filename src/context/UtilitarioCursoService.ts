@@ -6,20 +6,28 @@ const useCourses = () => {
   const [courses, setCourses] = useState<{ value: any; label: string }[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [coursesData, setCoursesData] = useState<{ value: any; label: string }[]>([]);
 
   useEffect(() => {
     // Função para buscar os cursos
     const fetchCourses = async () => {
       try {
         const response = await CourseService.listarTodos(); // Substitua pela URL da sua API
-        const coursesData: ICourse[] = response.data;
+         const aux: ICourse[] = response.data;
 
         // Formatando os dados para o formato necessário
-        const formattedCourses = coursesData.map((course) => ({
+        const formattedCourses = aux.map((course) => ({
           value: course._id,
           label: course.name,
         }));
 
+        const formattedCoursesData = aux.map((c) => ({
+          value: c,
+          label: c.name,
+        }));
+
+
+        setCoursesData(formattedCoursesData)
         setCourses(formattedCourses);
       } catch (err) {
         setError("Falha ao carregar os cursos");
@@ -31,7 +39,7 @@ const useCourses = () => {
     fetchCourses();
   }, []);
 
-  return { courses, loading, error };
+  return { courses, loading, error, coursesData, setCoursesData };
 };
 
 export default useCourses;

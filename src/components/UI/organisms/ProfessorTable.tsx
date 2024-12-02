@@ -151,9 +151,7 @@ export default function ProfessorTable({
       <ProfessorFilters
         filters={filters}
         setFilters={setFilters}
-        availableCourses={courses.map((course) => course.label)}
-        availableTitulacoes={["Doutor", "Mestre"]}
-      />
+        availableCourses={courses.map((course) => course.label)} availableTitulacoes={[]}      />
 
       <TableContainer
         component={Paper}
