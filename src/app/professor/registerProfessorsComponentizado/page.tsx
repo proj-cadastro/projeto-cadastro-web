@@ -7,20 +7,27 @@ import TitleRegister from "@/components/UI/atoms/TitleRegister";
 import { professorFields } from "@/components/UI/atoms/ProfessorFields";
 import { ProfessorService } from "@/service/Service";
 import useCourses from "@/context/UtilitarioCursoService";
-import { Box, CircularProgress, Container, Snackbar, Alert } from "@mui/material";
+import {
+  Box,
+  CircularProgress,
+  Container,
+  Snackbar,
+  Alert,
+} from "@mui/material";
 import Navbar from "@/components/UI/organisms/Navbar";
 import Footer from "@/components/UI/organisms/Footer";
-import auth from "@/components/HOCS/auth"; // Importando o HOC de autenticação
+import auth from "@/components/HOCS/auth";
 import { useRouter } from "next/navigation";
 
 function RegisterProfessorsComponentizado() {
   const { courses, loading } = useCourses();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
-  const [snackbarSeverity, setSnackbarSeverity] = useState<"success" | "error">("success");
+  const [snackbarSeverity, setSnackbarSeverity] = useState<"success" | "error">(
+    "success"
+  );
   const router = useRouter();
 
-  // Função para fechar o Snackbar
   const handleCloseSnackbar = () => {
     setSnackbarOpen(false);
   };
@@ -45,20 +52,19 @@ function RegisterProfessorsComponentizado() {
     if (field.id === "coursesId") {
       return {
         ...field,
-        options: courses, // Passando os cursos carregados
+        options: courses,
       };
     }
     return field;
   });
 
-  // Função para enviar os dados do novo professor
   const handleSubmit = async (data: Record<string, any>) => {
     try {
       await ProfessorService.criar(data);
       setSnackbarMessage("Professor cadastrado com sucesso!");
       setSnackbarSeverity("success");
       setSnackbarOpen(true);
-      setTimeout(() => router.push("/professor/reportProfessors"), 2000); // Redireciona após 2 segundos
+      setTimeout(() => router.push("/professor/reportProfessors"), 2000);
     } catch (error) {
       console.error("Erro ao cadastrar o professor:", error);
       setSnackbarMessage("Erro ao cadastrar o professor.");
@@ -78,14 +84,14 @@ function RegisterProfessorsComponentizado() {
           />
         }
         fields={updatedFields}
-        onSubmit={handleSubmit} // Passa a função handleSubmit para o onSubmit
+        onSubmit={handleSubmit}
       />
       <Footer />
       <Snackbar
         open={snackbarOpen}
-        autoHideDuration={6000} // Fecha após 6 segundos
+        autoHideDuration={6000}
         onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
         <Alert
           onClose={handleCloseSnackbar}
@@ -99,5 +105,4 @@ function RegisterProfessorsComponentizado() {
   );
 }
 
-// Envolvendo o componente com o HOC de autenticação
 export default auth(RegisterProfessorsComponentizado);

@@ -17,19 +17,17 @@ export default function RegisterComponentizado() {
   );
   const router = useRouter();
 
-  // Função para fechar o Snackbar
   const handleCloseSnackbar = () => {
     setSnackbarOpen(false);
   };
 
-  // Função para enviar os dados do novo usuário
   const postUser = async (data: Partial<IUser>) => {
     try {
-      await UserService.criar(data); // Chamada para criar o usuário
+      await UserService.criar(data);
       setSnackbarMessage("Usuário cadastrado com sucesso!");
       setSnackbarSeverity("success");
       setSnackbarOpen(true);
-      setTimeout(() => router.push("/user/login"), 2000); // Redireciona após 2 segundos
+      setTimeout(() => router.push("/user/login"), 2000);
     } catch (error) {
       console.error("Erro ao cadastrar o usuário:", error);
       setSnackbarMessage("Erro ao cadastrar o usuário.");
@@ -54,7 +52,7 @@ export default function RegisterComponentizado() {
         open={snackbarOpen}
         autoHideDuration={6000}
         onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
         <Alert
           onClose={handleCloseSnackbar}

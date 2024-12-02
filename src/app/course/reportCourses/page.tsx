@@ -5,7 +5,7 @@ import Navbar from "@/components/UI/organisms/Navbar";
 import Footer from "@/components/UI/organisms/Footer";
 import CoursesTable from "../../../components/UI/organisms/CoursesTable";
 import { Container, Box } from "@mui/material";
-import { mockCourses } from "../../../utils/mockCourses";
+//import { mockCourses } from "../../../utils/mockCourses";
 import auth from "@/components/HOCS/auth"; // Importando o HOC de autenticação
 
 const COLUMN_LABELS: Record<string, string> = {

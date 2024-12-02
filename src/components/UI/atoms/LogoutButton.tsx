@@ -3,19 +3,25 @@ import { Button } from "@mui/material";
 interface LogoutButtonProps {
   text: string;
   href?: string;
+  onClick?: () => void;
 }
 
-export default function LogoutButton({ text, href }: LogoutButtonProps) {
+export default function LogoutButton({
+  text,
+  href,
+  onClick,
+}: LogoutButtonProps) {
   return (
     <Button
-      variant="contained"      
+      onClick={onClick}
+      variant="contained"
       href={href}
       sx={{
         backgroundColor: "#FF0000",
-        color: "#fff", 
+        color: "#fff",
         size: "large",
         width: "100%",
-        maxWidth: 20
+        maxWidth: 20,
       }}
     >
       {text}

@@ -29,19 +29,16 @@ export default function EditProfessors({
   const { courses } = useCourses();
   const router = useRouter();
 
-  // Estados para o Snackbar
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState<"success" | "error">(
     "success"
   );
 
-  // Função para fechar o Snackbar
   const handleCloseSnackbar = () => {
     setSnackbarOpen(false);
   };
 
-  // Desembrulhando a Promise
   useEffect(() => {
     async function fetchParams() {
       const resolvedParams = await params;
@@ -50,7 +47,6 @@ export default function EditProfessors({
     fetchParams();
   }, [params]);
 
-  // Buscar os dados do professor assim que o id for definido
   useEffect(() => {
     if (id) {
       const fetchProfessor = async () => {
@@ -67,7 +63,6 @@ export default function EditProfessors({
     }
   }, [id]);
 
-  // Função de envio de dados para o backend
   const putProfessor = async (data: Record<string, any>) => {
     if (!id) return;
 
@@ -132,9 +127,9 @@ export default function EditProfessors({
       <Footer />
       <Snackbar
         open={snackbarOpen}
-        autoHideDuration={6000} // Fecha após 6 segundos
+        autoHideDuration={6000}
         onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
         <Alert
           onClose={handleCloseSnackbar}
