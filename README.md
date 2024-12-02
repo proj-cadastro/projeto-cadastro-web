@@ -21,7 +21,7 @@ A ideia para o desenvolvimento do projeto surgiu da necessidade de se adequar ao
  
 ### 🏁 Entregas de Sprints
 Cada sprint no desenvolvimento ágil resulta em uma entrega funcional e incremental do sistema. Essas entregas são versões do produto que incluem novas funcionalidades implementadas e testadas, prontas para serem demonstradas e, potencialmente, utilizadas. Observe a relação a seguir:
-| Sprint | Previsão | Status | Histórico |
+| Sprint | Status | Histórico |
 |:--:|:----------:|:----------------|:-------------------------------------------------:|
 | 01 | ✔️ Concluída    | [ver relatório](https://github.com/VitorRuan/Sprints/blob/Sprint1/README.md) |
 | 02 | ✔️ Concluída    | [ver relatório](https://github.com/VitorRuan/Sprints/blob/Sprint2/README.md) |
