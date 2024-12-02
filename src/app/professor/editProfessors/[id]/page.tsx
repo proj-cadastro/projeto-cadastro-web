@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import React, { useEffect, useState } from "react";
@@ -7,18 +8,38 @@ import TitleRegister from "@/components/UI/atoms/TitleRegister";
 import { professorFields } from "@/components/UI/atoms/ProfessorFields";
 import { ProfessorService } from "@/service/Service";
 import useCourses from "../../../../context/UtilitarioCursoService";
-import { Box, CircularProgress, Container } from "@mui/material";
+import {
+  Box,
+  CircularProgress,
+  Container,
+  Snackbar,
+  Alert,
+} from "@mui/material";
 import Navbar from "@/components/UI/organisms/Navbar";
 import Footer from "@/components/UI/organisms/Footer";
+import { useRouter } from "next/navigation";
 
 export default function EditProfessors({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
-  const [id, setId] = useState<string | null>(null); // Estado para armazenar o id
-  const [professor, setProfessor] = useState<IProfessor | null>(null); // Estado para armazenar os dados do professor
+  const [id, setId] = useState<string | null>(null);
+  const [professor, setProfessor] = useState<IProfessor | null>(null);
   const { courses } = useCourses();
+  const router = useRouter();
+
+  // Estados para o Snackbar
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState<"success" | "error">(
+    "success"
+  );
+
+  // Função para fechar o Snackbar
+  const handleCloseSnackbar = () => {
+    setSnackbarOpen(false);
+  };
 
   // Desembrulhando a Promise
   useEffect(() => {
@@ -34,9 +55,9 @@ export default function EditProfessors({
     if (id) {
       const fetchProfessor = async () => {
         try {
-          const response = await ProfessorService.buscarPorId(id); // Chamada à API
-          const professorData = response.data; // Acessa os dados da resposta
-          setProfessor(professorData); // Atribui os dados ao estado
+          const response = await ProfessorService.buscarPorId(id);
+          const professorData = response.data;
+          setProfessor(professorData);
         } catch (error) {
           console.error("Erro ao buscar os dados do professor:", error);
         }
@@ -47,10 +68,21 @@ export default function EditProfessors({
   }, [id]);
 
   // Função de envio de dados para o backend
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const putProfessor = (data: Record<string, any>) => {
-    if (id) ProfessorService.atualizar(id, data);
-    console.log("Dados enviados:", data);
+  const putProfessor = async (data: Record<string, any>) => {
+    if (!id) return;
+
+    try {
+      await ProfessorService.atualizar(id, data);
+      setSnackbarMessage("Dados atualizados com sucesso!");
+      setSnackbarSeverity("success");
+      setSnackbarOpen(true);
+      setTimeout(() => router.push("/professor/reportProfessors"), 2000);
+    } catch (error) {
+      console.error("Erro ao atualizar os dados:", error);
+      setSnackbarMessage("Erro ao atualizar os dados do professor.");
+      setSnackbarSeverity("error");
+      setSnackbarOpen(true);
+    }
   };
 
   const retornaProfessor = () => {
@@ -61,7 +93,7 @@ export default function EditProfessors({
     if (field.id === "coursesId") {
       return {
         ...field,
-        options: courses, // Passando os cursos carregados
+        options: courses,
       };
     }
     return field;
@@ -94,10 +126,24 @@ export default function EditProfessors({
           />
         }
         fields={updatedFields}
-        onSubmit={putProfessor} // Passa a função putProfessor para o onSubmit
-        initialValues={retornaProfessor()} // Passa os dados do professor para o formulário
+        onSubmit={putProfessor}
+        initialValues={retornaProfessor()}
       />
       <Footer />
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000} // Fecha após 6 segundos
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={snackbarSeverity}
+          sx={{ width: "100%" }}
+        >
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 }
