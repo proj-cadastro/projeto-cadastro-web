@@ -12,6 +12,10 @@ const theme = createTheme({
     secondary: {
       main: "#eeeeee",
     },
+    background: {
+      default: "#d8d8d8", // Cor de fundo padrão
+      paper: "#ffffff", // Cor de fundo para componentes como Paper
+    },
   },
 });
 
