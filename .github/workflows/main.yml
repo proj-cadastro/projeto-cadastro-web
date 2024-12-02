@@ -1,4 +1,4 @@
-name: Pipeline CI - Frontend
+name: Pipeline CI
 
 on:
   push:
@@ -62,12 +62,10 @@ jobs:
           echo "Commits desde a última tag:"
           echo "$COMMITS"
           
-          # Inicializando variáveis
           MAJOR=0
           MINOR=0
           PATCH=0
           
-          # Analisando mensagens de commit
           for COMMIT in "$COMMITS"; do
             if [[ "$COMMIT" == *"BREAKING CHANGE"* ]]; then
               MAJOR=1
@@ -78,7 +76,6 @@ jobs:
             fi
           done
           
-          # Calculando a nova versão usando semver
           CURRENT_VERSION=${LAST_TAG#v}
           NEW_VERSION=$CURRENT_VERSION
           if [[ $MAJOR -eq 1 ]]; then
@@ -100,7 +97,6 @@ jobs:
           else
             echo "A versão no package.json já está atualizada."
           fi
-        shell: bash
 
       - name: Commit e push (se necessário)
         env:
