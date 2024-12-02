@@ -9,7 +9,7 @@ import { FieldConfig } from "../organisms/DynamicForm";
 
 
 
-export const professorFields: FieldConfig[] = [
+export const    professorFields: FieldConfig[] = [
     {
         id: "name",
         label: "Nome",

@@ -1,18 +1,21 @@
 import React from "react";
-import { Box, TextField, Chip, Autocomplete } from "@mui/material";
+import { Box, TextField, Autocomplete, Chip } from "@mui/material";
 
 interface CourseFiltersProps {
   filters: {
     search: string;
     models: string[];
+
   };
   setFilters: React.Dispatch<
     React.SetStateAction<{
       search: string;
       models: string[];
+
     }>
   >;
   availableModels: string[];
+
 }
 
 export default function CourseFilters({
@@ -20,27 +23,39 @@ export default function CourseFilters({
   setFilters,
   availableModels,
 }: CourseFiltersProps) {
+
   return (
     <Box
       sx={{
         display: "flex",
-        flexWrap: "wrap",
-        gap: 2,
+        width: "100%",
         justifyContent: "space-between",
+        alignItems: "center",
+        border: "1px solid #ccc",
+        padding: 2,
+        borderRadius: 2,
+        backgroundColor: "#fdfcfc",
       }}
     >
+
+
+      {/* Campo de busca */}
       <TextField
-        label="Buscar"
+        label="Buscar por Nome"
         variant="outlined"
         size="small"
         value={filters.search}
         onChange={(e) =>
           setFilters((prev) => ({ ...prev, search: e.target.value }))
         }
+
+
       />
+
+      {/* Campo de coordenadores */}
       <Autocomplete
         multiple
-        size="small"
+        size="medium"
         options={availableModels}
         value={filters.models}
         onChange={(_e, value) =>
@@ -52,9 +67,11 @@ export default function CourseFilters({
           ))
         }
         renderInput={(params) => (
-          <TextField sx={{ width: "130px" }} {...params} label="Modelo" />
+          <TextField {...params} label="Modalidade" size="medium" />
         )}
       />
+
+
     </Box>
   );
 }

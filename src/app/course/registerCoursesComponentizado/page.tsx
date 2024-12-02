@@ -43,6 +43,20 @@ function RegisterCoursesComponentizado() {
     );
   }
 
+  const handleSubmit = async (data: Record<string, any>) => {
+
+    try {
+     console.log(JSON.stringify(data))
+     await CourseService.criar(data)
+    } catch (error) {
+      
+    }
+
+  }
+
+
+
+
   return (
     <Box>
       <Navbar />
@@ -51,7 +65,7 @@ function RegisterCoursesComponentizado() {
           <TitleRegister text="Cadastro de Cursos" subText="Fatec Votorantim" />
         }
         fields={updatedFields}
-        onSubmit={CourseService.criar}
+        onSubmit={handleSubmit}
       />
       <Footer />
     </Box>

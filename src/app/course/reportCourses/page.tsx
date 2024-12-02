@@ -9,14 +9,14 @@ import { mockCourses } from "../../../utils/mockCourses";
 import auth from "@/components/HOCS/auth"; // Importando o HOC de autenticação
 
 const COLUMN_LABELS: Record<string, string> = {
-  name: "Name",
-  codCourse: "Code",
-  subjects: "Subjects",
+  name: "Nome",
+  codCourse: "Código do Curso",
+  subjects: "Disciplinas",
   initialism: "Initialism",
-  model: "Model",
-  professors: "Professors",
-  coordinator: "Coordinator",
-  actions: "Actions",
+  model: "Modelo",
+  professors: "Professores",
+  coordinator: "Coordenador",
+  actions: "Ações",
 };
 
 const COLUMN_OPTIONS = Object.keys(COLUMN_LABELS);
@@ -51,7 +51,6 @@ function ReportCourses() {
         }}
       >
         <CoursesTable
-          courses={mockCourses}
           visibleColumns={visibleColumns}
           setVisibleColumns={setVisibleColumns}
           COLUMN_OPTIONS={COLUMN_OPTIONS}

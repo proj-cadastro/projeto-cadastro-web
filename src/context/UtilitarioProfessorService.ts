@@ -9,6 +9,7 @@ const useProfessors = () => {
   );
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  
 
   useEffect(() => {
     const fetchProfessors = async () => {
@@ -35,3 +36,6 @@ const useProfessors = () => {
 };
 
 export default useProfessors;
+
+
+//ponto de parada

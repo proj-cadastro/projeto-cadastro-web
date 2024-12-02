@@ -10,25 +10,11 @@ import {
 import CoursesTableHeader from "../molecules/CoursesTableHeader";
 import CourseTableRow from "../molecules/CoursesTableRow";
 import CoursesFilters from "../molecules/CoursesFilters";
-import { CourseType } from "../../../interfaces/ICourses";
-
-function transformCourseToRecord(course: CourseType): Record<string, string> {
-  return {
-    id: course.id || "-",
-    name: course.name || "-",
-    codCourse: course.codCourse || "-",
-    subjects: course.subjects ? course.subjects.join(", ") : "-",
-    initialism: course.initialism || "-",
-    model: course.model || "-",
-    professors: course.professors
-      ? course.professors.map((prof) => prof.name).join(", ")
-      : "-",
-    coordinator: course.coordinator ? course.coordinator.name : "-",
-  };
-}
+import ColumnVisibilityControl from "../molecules/ColumnVisibilityControl";
+import useCourses from "@/context/UtilitarioCursoService";
+import { CourseService } from "@/service/Service";
 
 interface CoursesTableProps {
-  courses: CourseType[];
   visibleColumns: string[];
   setVisibleColumns: (columns: string[]) => void;
   COLUMN_LABELS: Record<string, string>;
@@ -36,13 +22,13 @@ interface CoursesTableProps {
 }
 
 export default function CoursesTable({
-  courses,
   visibleColumns,
+  setVisibleColumns,
   COLUMN_LABELS,
+  COLUMN_OPTIONS,
 }: CoursesTableProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
-
   const [filters, setFilters] = useState<{
     search: string;
     models: string[];
@@ -51,18 +37,23 @@ export default function CoursesTable({
     models: [],
   });
 
-  const filteredCourses = courses.filter((course) => {
+  const { coursesData, setCoursesData } = useCourses();
+
+  const filteredCourses = coursesData.filter((course) => {
+    const courseValue = course.value;
+
     const matchesSearch =
-      course.name.toLowerCase().includes(filters.search.toLowerCase()) ||
-      course.codCourse.includes(filters.search);
+      courseValue.name.toLowerCase().includes(filters.search.toLowerCase()) ||
+      courseValue.codCourse.includes(filters.search);
 
     const matchesModels =
-      filters.models.length === 0 || filters.models.includes(course.model);
+      filters.models.length === 0 || filters.models.includes(courseValue.model);
 
     return matchesSearch && matchesModels;
   });
 
   const startIndex = (currentPage - 1) * itemsPerPage;
+
   const currentPageItems = filteredCourses.slice(
     startIndex,
     startIndex + itemsPerPage
@@ -75,22 +66,68 @@ export default function CoursesTable({
     setCurrentPage(page);
   };
 
+  const handleDeleteCourse = async (courseId: string) => {
+    try {
+      await CourseService.deletar(courseId);
+
+      const updatedCourseList = coursesData.filter(
+        (course) => course.value._id !== courseId
+      );
+      setCoursesData(updatedCourseList);
+    } catch (error) {
+      console.error("Erro ao excluir curso:", error);
+    }
+  };
+
+  const handleColumnVisibilityChange = (selectedColumns: string[]) => {
+    const originalOrder = [
+      "name",
+      "codCourse",
+      "subjects",
+      "initialism",
+      "model",
+      "professors",
+      "coordinator",
+      "actions",
+    ];
+
+    const updatedColumns = selectedColumns.includes("actions")
+      ? selectedColumns
+      : [...selectedColumns, "actions"];
+
+    const orderedColumns = originalOrder.filter((col) =>
+      updatedColumns.includes(col)
+    );
+
+    setVisibleColumns(orderedColumns);
+  };
+
   return (
-    <Box>
+    <Box
+      sx={{
+        width: "100%",
+        maxWidth: "90%",
+        margin: "0 auto",
+        borderRadius: 2,
+        mt: 12,
+        overflowX: "auto",
+        pb: 12,
+      }}
+    >
       <CoursesFilters
         filters={filters}
         setFilters={setFilters}
-        availableModels={["Presencial", "EAD"]}
+        availableModels={["Presencial", "EAD", "Híbrido"]}
       />
+
       <TableContainer
         component={Paper}
         sx={{
           width: "100%",
-          maxWidth: 1400,
           margin: "0 auto",
           borderRadius: 2,
           boxShadow: 3,
-          mt: 4,
+          mt: 2,
           overflowX: "auto",
         }}
       >
@@ -100,11 +137,12 @@ export default function CoursesTable({
             COLUMN_LABELS={COLUMN_LABELS}
           />
           <TableBody>
-            {currentPageItems.map((course, index) => (
+            {currentPageItems.map((course) => (
               <CourseTableRow
-                key={index}
-                data={transformCourseToRecord(course)}
+                key={course.value._id}
+                data={course.value}
                 visibleColumns={visibleColumns}
+                onDelete={handleDeleteCourse}
               />
             ))}
           </TableBody>
@@ -114,12 +152,13 @@ export default function CoursesTable({
         count={Math.ceil(filteredCourses.length / itemsPerPage)}
         page={currentPage}
         onChange={handlePageChange}
-        sx={{
-          mt: 2,
-          display: "flex",
-          justifyContent: "center",
-          width: "100%",
-        }}
+        sx={{ mt: 2, display: "flex", justifyContent: "center" }}
+      />
+      <ColumnVisibilityControl
+        visibleColumns={visibleColumns}
+        setVisibleColumns={handleColumnVisibilityChange}
+        COLUMN_OPTIONS={COLUMN_OPTIONS}
+        COLUMN_LABELS={COLUMN_LABELS}
       />
     </Box>
   );

@@ -22,13 +22,19 @@ export const courseFields: FieldConfig[] = [
     {
         id: "subjects",
         label: "Disciplinas",
-        type: "select",
-        options: [
-            { value: ["Matemática"], label: "Matemática" },
-            { value: "Física", label: "Física" },
-            { value: "Química", label: "Química" },
-        ],
+        type: "textarea",
         required: false, // Opcional
+        transformValue: (value: any) => {
+            if (Array.isArray(value)) {
+                // Caso o valor já seja um array, não transforme
+                return value;
+            }
+            // Caso contrário, transforme de string para array
+            return value ? value.split(",").map((item: string) => item.trim()) : [];
+        },
+        
+        //transformando valores do input string -> string[]
+
     },
     {
         id: "initialism",
