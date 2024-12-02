@@ -8,6 +8,7 @@ import { IUser } from "@/interfaces/IUser";
 import { UserService } from "@/service/Service";
 import { Box, Snackbar, Alert } from "@mui/material";
 import { useRouter } from "next/navigation";
+import LoginPrompt from "@/components/UI/molecules/LoginPrompt";
 
 export default function RegisterComponentizado() {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -37,7 +38,7 @@ export default function RegisterComponentizado() {
   };
 
   return (
-    <Box>
+    <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
       <DynamicForm
         title={
           <TitleRegister
@@ -62,6 +63,17 @@ export default function RegisterComponentizado() {
           {snackbarMessage}
         </Alert>
       </Snackbar>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          marginTop: -30,
+          width: "100%",
+        }}
+      >
+        <LoginPrompt />
+      </Box>
     </Box>
   );
 }
