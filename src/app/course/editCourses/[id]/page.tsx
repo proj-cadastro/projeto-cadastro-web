@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import React, { useEffect, useState } from "react";
@@ -6,23 +7,38 @@ import { ICourse } from "@/interfaces/ICourses";
 import TitleRegister from "@/components/UI/atoms/TitleRegister";
 import { courseFields } from "@/components/UI/atoms/CourseFields";
 import { CourseService } from "@/service/Service";
-import useCourses from "@/context/UtilitarioCursoService";
-import { Box, CircularProgress, Container } from "@mui/material";
+import {
+  Box,
+  CircularProgress,
+  Container,
+  Snackbar,
+  Alert,
+} from "@mui/material";
 import Navbar from "@/components/UI/organisms/Navbar";
 import Footer from "@/components/UI/organisms/Footer";
 import useProfessors from "@/context/UtilitarioProfessorService";
+import { useRouter } from "next/navigation";
 
 export default function EditCourses({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
-  const [id, setId] = useState<string | null>(null); // Estado para armazenar o ID
-  const [course, setCourse] = useState<ICourse | null>(null); // Estado para armazenar os dados do curso
-  const { coursesData } = useCourses();
-  const {professors} = useProfessors()
+  const [id, setId] = useState<string | null>(null);
+  const [course, setCourse] = useState<ICourse | null>(null);
+  const { professors } = useProfessors();
+  const router = useRouter();
 
-  // Desembrulhando a Promise
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState<"success" | "error">(
+    "success"
+  );
+
+  const handleCloseSnackbar = () => {
+    setSnackbarOpen(false);
+  };
+
   useEffect(() => {
     async function fetchParams() {
       const resolvedParams = await params;
@@ -31,14 +47,13 @@ export default function EditCourses({
     fetchParams();
   }, [params]);
 
-  // Buscar os dados do curso assim que o ID for definido
   useEffect(() => {
     if (id) {
       const fetchCourse = async () => {
         try {
-          const response = await CourseService.buscarPorId(id); // Chamada à API
-          const courseData = response.data; // Acessa os dados da resposta
-          setCourse(courseData); // Atribui os dados ao estado
+          const response = await CourseService.buscarPorId(id);
+          const courseData = response.data;
+          setCourse(courseData);
         } catch (error) {
           console.error("Erro ao buscar os dados do curso:", error);
         }
@@ -48,14 +63,21 @@ export default function EditCourses({
     }
   }, [id]);
 
-  // Função de envio de dados para o backend
-  const putCourse = (data: Record<string, any>) => {
-    if (id) CourseService.atualizar(id, data);
-    console.log("Dados enviados:", data);
-  };
-
-  const retornaCourse = () => {
-    return course || {};
+  const putCourse = async (data: Record<string, any>) => {
+    if (id) {
+      try {
+        await CourseService.atualizar(id, data);
+        setSnackbarMessage("Curso atualizado com sucesso!");
+        setSnackbarSeverity("success");
+        setSnackbarOpen(true);
+        setTimeout(() => router.push("/course/reportCourses"), 2000);
+      } catch (error) {
+        console.error("Erro ao atualizar o curso:", error);
+        setSnackbarMessage("Erro ao atualizar o curso.");
+        setSnackbarSeverity("error");
+        setSnackbarOpen(true);
+      }
+    }
   };
 
   const updatedFields = courseFields.map((field) => {
@@ -92,10 +114,24 @@ export default function EditCourses({
           <TitleRegister text="Edição de Cursos" subText="Fatec Votorantim" />
         }
         fields={updatedFields}
-        onSubmit={putCourse} // Passa a função putCourse para o onSubmit
-        initialValues={retornaCourse()} // Passa os dados do curso para o formulário
+        onSubmit={putCourse}
+        initialValues={course}
       />
       <Footer />
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={snackbarSeverity}
+          sx={{ width: "100%" }}
+        >
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 }
