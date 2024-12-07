@@ -18,12 +18,9 @@ import Navbar from "@/components/UI/organisms/Navbar";
 import Footer from "@/components/UI/organisms/Footer";
 import useProfessors from "@/context/UtilitarioProfessorService";
 import { useRouter } from "next/navigation";
+import auth from "@/components/HOCS/auth";
 
-export default function EditCourses({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
+function EditCourses({ params }: { params: Promise<{ id: string }> }) {
   const [id, setId] = useState<string | null>(null);
   const [course, setCourse] = useState<ICourse | null>(null);
   const { professors } = useProfessors();
@@ -135,3 +132,5 @@ export default function EditCourses({
     </Box>
   );
 }
+
+export default auth(EditCourses); // Exportando o componente encapsulado no HOC de autenticação

@@ -18,12 +18,9 @@ import {
 import Navbar from "@/components/UI/organisms/Navbar";
 import Footer from "@/components/UI/organisms/Footer";
 import { useRouter } from "next/navigation";
+import auth from "@/components/HOCS/auth";
 
-export default function EditProfessors({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
+function EditProfessors({ params }: { params: Promise<{ id: string }> }) {
   const [id, setId] = useState<string | null>(null);
   const [professor, setProfessor] = useState<IProfessor | null>(null);
   const { courses } = useCourses();
@@ -142,3 +139,5 @@ export default function EditProfessors({
     </Box>
   );
 }
+
+export default auth(EditProfessors);
