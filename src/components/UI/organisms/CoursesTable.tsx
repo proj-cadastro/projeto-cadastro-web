@@ -43,7 +43,7 @@ export default function CoursesTable({
     const courseValue = course.value;
 
     const matchesSearch =
-      courseValue.name.toLowerCase().includes(filters.search.toLowerCase()) ||
+      courseValue.getNome().toLowerCase().includes(filters.search.toLowerCase()) ||
       courseValue.codCourse.includes(filters.search);
 
     const matchesModels =
@@ -66,7 +66,7 @@ export default function CoursesTable({
     setCurrentPage(page);
   };
 
-  const handleDeleteCourse = async (courseId: string) => {
+  const handleDeleteCourse = async (courseId: number) => {
     try {
       await CourseService.deletar(courseId);
 
@@ -139,7 +139,7 @@ export default function CoursesTable({
           <TableBody>
             {currentPageItems.map((course) => (
               <CourseTableRow
-                key={course.value._id}
+                key={course.value.id}
                 data={course.value}
                 visibleColumns={visibleColumns}
                 onDelete={handleDeleteCourse}

@@ -1,50 +1,48 @@
-import { ProfessorService } from "@/service/Service";
 import { FieldConfig } from "../organisms/DynamicForm";
 
-const professoresCadastrados = ProfessorService.listarTodos
 
 
 export const courseFields: FieldConfig[] = [
     {
-        id: "name",
+        id: "nome",
         label: "Nome do Curso",
         type: "text",
         placeholder: "Digite o nome do curso",
         required: true,
     },
     {
-        id: "codCourse",
+        id: "codigo",
         label: "Código do Curso",
         type: "text",
         placeholder: "Digite o código do curso",
         required: true,
     },
-    {
-        id: "subjects",
-        label: "Disciplinas",
-        type: "textarea",
-        required: false, // Opcional
-        transformValue: (value: any) => {
-            if (Array.isArray(value)) {
-                // Caso o valor já seja um array, não transforme
-                return value;
-            }
-            // Caso contrário, transforme de string para array
-            return value ? value.split(",").map((item: string) => item.trim()) : [];
-        },
+    // {
+    //     id: "subjects",
+    //     label: "Disciplinas",
+    //     type: "textarea",
+    //     required: false, // Opcional
+    //     transformValue: (value: any) => {
+    //         if (Array.isArray(value)) {
+    //             // Caso o valor já seja um array, não transforme
+    //             return value;
+    //         }
+    //         // Caso contrário, transforme de string para array
+    //         return value ? value.split(",").map((item: string) => item.trim()) : [];
+    //     },
         
-        //transformando valores do input string -> string[]
+    //     //transformando valores do input string -> string[]
 
-    },
+    // },
     {
-        id: "initialism",
+        id: "sigla",
         label: "Sigla",
         type: "text",
         placeholder: "Exemplo: ENG",
         required: true,
     },
     {
-        id: "model",
+        id: "modelo",
         label: "Modelo do Curso",
         type: "select",
         options: [
@@ -54,15 +52,15 @@ export const courseFields: FieldConfig[] = [
         ],
         required: true,
     },
+    // {
+    //     id: "professors",
+    //     label: "Professores",
+    //     type: "checkbox",
+    //     options: [],
+    //     required: true,
+    // },
     {
-        id: "professors",
-        label: "Professores",
-        type: "checkbox",
-        options: [],
-        required: true,
-    },
-    {
-        id: "coordinator",
+        id: "coordenador",
         label: "Coordenador",
         type: "select",
         options: [],

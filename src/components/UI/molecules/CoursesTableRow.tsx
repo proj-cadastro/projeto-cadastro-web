@@ -2,12 +2,13 @@ import React from "react";
 import { TableRow, TableCell, Button, Box } from "@mui/material";
 import { ICourse } from "@/interfaces/ICourses";
 import Link from "next/link";
+import CourseResponseDTO from "@/dto/CourseResponseDTO";
 
 
 interface CourseTableRowProps {
-  data: ICourse
+  data: CourseResponseDTO
   visibleColumns: string[];
-  onDelete: (courseId: string) => void
+  onDelete: (courseId: number) => void
   //professorMap: Record<string, string>
 }
 
@@ -20,10 +21,10 @@ export default function CourseTableRowProps({
 
   return (
     <TableRow>
-      {visibleColumns.includes("name") && <TableCell>{data.name}</TableCell>}
-      {visibleColumns.includes("name") && <TableCell>{data.codCourse}</TableCell>}
-      {visibleColumns.includes("name") && <TableCell>{data.model}</TableCell>}
-      {visibleColumns.includes("name") && <TableCell>{data.coordinator.name}</TableCell>}
+      {visibleColumns.includes("name") && <TableCell>{data.getNome()}</TableCell>}
+      {visibleColumns.includes("name") && <TableCell>{data.getCodigo()}</TableCell>}
+      {visibleColumns.includes("name") && <TableCell>{data.getModelo()}</TableCell>}
+      {visibleColumns.includes("name") && <TableCell>{data.getCoordenadorId()}</TableCell>}
       {visibleColumns.includes("actions") && (
         <TableCell>
           <Box sx={{ display: "flex", gap: 1 }}>
@@ -32,7 +33,7 @@ export default function CourseTableRowProps({
               color="primary"
               size="small"
               component={Link}
-              href={`/course/editCourses/${data._id}`}
+              href={`/course/editCourses/${data.id}`}
             >
               Editar
             </Button>
@@ -41,7 +42,7 @@ export default function CourseTableRowProps({
               variant="outlined"
               color="error"
               size="small"
-              onClick={() => onDelete(data._id)}
+              onClick={() => onDelete(data.id)}
             >
               Excluir
             </Button>

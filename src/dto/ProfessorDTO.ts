@@ -10,6 +10,7 @@
 // }
 
 export default class ProfessorDTO {
+    private id: Partial<number | undefined>;
     private nome: string;
     private email: string;
     private titulacao: string;
@@ -27,8 +28,10 @@ export default class ProfessorDTO {
         referencia: string,
         lattes: string,
         statusAtividade: string,
-        observacoes: string
+        observacoes: string,
+        id?: number,
     ) {
+        this.id = id;
         this.nome = nome;
         this.email = email;
         this.titulacao = this.translateSelectValue(titulacao);

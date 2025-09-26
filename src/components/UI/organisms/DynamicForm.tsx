@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Stack,
@@ -42,14 +42,28 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
   onSubmit,
   initialValues = {},
 }) => {
-  const [formData, setFormData] = useState<Record<string, any>>(() => {
-    return fields.reduce<Record<string, any>>((acc, field) => {
-      acc[field.id] = initialValues[field.id] || ""; // Inicializa todos os campos como string vazia
-      return acc;
-    }, {});
-  });
+  const [formData, setFormData] = useState<Record<string, any>>({});
 
-  const [errors, setErrors] = useState<Record<string, string>>({}); // Adicionando estado para erros
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  // Atualiza formData sempre que initialValues mudar
+  useEffect(() => {
+    if (initialValues) {
+      // Se inicialValues tiver 'data', pega o objeto interno
+      const values =
+        "data" in initialValues ? initialValues.data : initialValues;
+
+      const newFormData = fields.reduce<Record<string, any>>((acc, field) => {
+        if (field.type === "checkbox") {
+          acc[field.id] = values[field.id] || [];
+        } else {
+          acc[field.id] = values[field.id] ?? "";
+        }
+        return acc;
+      }, {});
+      setFormData(newFormData);
+    }
+  }, [initialValues, fields]);
 
   const handleChange = (id: string, value: any) => {
     setFormData((prev) => ({ ...prev, [id]: value }));
@@ -58,14 +72,11 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validação apenas para campos de texto
     const newErrors: Record<string, string> = {};
     fields.forEach((field) => {
       if (
         field.required &&
-        (field.type === "text" ||
-          field.type === "textarea" ||
-          field.type === "url") &&
+        ["text", "textarea", "url"].includes(field.type) &&
         !formData[field.id]
       ) {
         newErrors[field.id] = `${field.label} é obrigatório`;
@@ -74,10 +85,9 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
-      return; // Interrompe a execução se houver erros
+      return;
     }
 
-    // Aplica transformações nos valores do formulário
     const transformedData = fields.reduce<Record<string, any>>((acc, field) => {
       const rawValue = formData[field.id];
       acc[field.id] = field.transformValue
@@ -86,8 +96,8 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
       return acc;
     }, {});
 
-    setErrors({}); // Limpa erros
-    onSubmit(transformedData); // Envia os dados transformados
+    setErrors({});
+    onSubmit(transformedData);
   };
 
   return (
@@ -126,8 +136,6 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
             <Box sx={{ mt: 4 }}>
               <Grid container spacing={2.5}>
                 {fields.map((field) => {
-                  const fieldId = field.id; // Gerando um ID único para cada campo
-
                   if (field.type === "checkbox") {
                     return (
                       <Grid item xs={12} key={field.id}>
@@ -137,29 +145,27 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                         >
                           {field.options?.map((option) => (
                             <FormControlLabel
-                              key={option.value._id || uuidv4()} // Usando uuidv4 se não tiver _id
+                              key={option.value._id || uuidv4()}
                               control={
                                 <Checkbox
-                                  id={option.value._id || uuidv4()} // Adicionando ID único para autofill
+                                  id={option.value._id || uuidv4()}
                                   name={option.value._id || uuidv4()}
                                   checked={formData[field.id]?.includes(
                                     option.value
-                                  )} // Verificando se a opção está selecionada
+                                  )}
                                   onChange={() => {
                                     const newValues = [
                                       ...(formData[field.id] || []),
-                                    ]; // Garantir que formData[field.id] seja um array
+                                    ];
                                     if (newValues.includes(option.value)) {
-                                      // Se já estiver selecionada, desmarque
                                       newValues.splice(
                                         newValues.indexOf(option.value),
                                         1
                                       );
                                     } else {
-                                      // Se não estiver, adicione
                                       newValues.push(option.value);
                                     }
-                                    handleChange(field.id, newValues); // Atualiza o estado
+                                    handleChange(field.id, newValues);
                                   }}
                                   value={option.value}
                                 />
@@ -177,20 +183,20 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                       <FormControl fullWidth required={field.required}>
                         {field.type === "select" ? (
                           <>
-                            <InputLabel id={fieldId}>{field.label}</InputLabel>
+                            <InputLabel id={field.id}>{field.label}</InputLabel>
                             <Select
-                              id={field.id} // Adicionando ID único para autofill
+                              id={field.id}
                               name={field.id}
-                              value={formData[field.id] || ""} // Adiciona valor vazio se não houver valor
+                              value={formData[field.id] || ""}
                               onChange={(e) =>
                                 handleChange(field.id, e.target.value)
                               }
                               label={field.label}
                               required
                             >
-                              {field.options?.map((option, index) => (
+                              {field.options?.map((option) => (
                                 <MenuItem
-                                  key={option.value._id || uuidv4()} // Usando uuidv4 se não tiver _id
+                                  key={option.value._id || uuidv4()}
                                   value={option.value}
                                 >
                                   {option.label}
@@ -200,7 +206,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                           </>
                         ) : field.type === "textarea" ? (
                           <TextField
-                            id={field.id} // Adicionando ID único para autofill
+                            id={field.id}
                             name={field.id}
                             label={field.label}
                             multiline
@@ -210,12 +216,12 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                             onChange={(e) =>
                               handleChange(field.id, e.target.value)
                             }
-                            error={!!errors[field.id]} // Exibe erro se houver
-                            helperText={errors[field.id]} // Texto de erro
+                            error={!!errors[field.id]}
+                            helperText={errors[field.id]}
                           />
                         ) : (
                           <TextField
-                            id={field.id} // Adicionando ID único para autofill
+                            id={field.id}
                             label={field.label}
                             type={field.type}
                             placeholder={field.placeholder}
@@ -223,8 +229,8 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                             onChange={(e) =>
                               handleChange(field.id, e.target.value)
                             }
-                            error={!!errors[field.id]} // Exibe erro se houver
-                            helperText={errors[field.id]} // Texto de erro
+                            error={!!errors[field.id]}
+                            helperText={errors[field.id]}
                           />
                         )}
                       </FormControl>
@@ -235,7 +241,9 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
 
               <Box textAlign="center">
                 <Button type="submit" variant="contained" sx={{ mt: 4 }}>
-                  {initialValues._id ? "Atualizar" : "Cadastrar"}
+                  {Object.keys(initialValues).length > 0
+                    ? "Atualizar"
+                    : "Cadastrar"}
                 </Button>
               </Box>
             </Box>

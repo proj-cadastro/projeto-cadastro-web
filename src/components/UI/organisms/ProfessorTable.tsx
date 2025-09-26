@@ -58,8 +58,9 @@ export default function ProfessorTable({
       : [];
 
     const matchesSearch =
-      profValue.name.toLowerCase().includes(filters.search.toLowerCase()) ||
-      profValue.email.toLowerCase().includes(filters.search.toLowerCase());
+      (profValue?.name?.toLowerCase() || "").includes(filters.search.toLowerCase()) ||
+      (profValue?.email?.toLowerCase() || "").includes(filters.search.toLowerCase());
+
 
     const filteredCourseIds = filters.courses.map((courseName) =>
       Object.keys(courseMap).find((id) => courseMap[id] === courseName)
@@ -151,7 +152,7 @@ export default function ProfessorTable({
       <ProfessorFilters
         filters={filters}
         setFilters={setFilters}
-        availableCourses={courses.map((course) => course.label)} availableTitulacoes={[]}      />
+        availableCourses={courses.map((course) => course.label)} availableTitulacoes={[]} />
 
       <TableContainer
         component={Paper}

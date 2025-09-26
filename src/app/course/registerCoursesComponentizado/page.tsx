@@ -63,12 +63,12 @@ function RegisterCoursesComponentizado() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSubmit = async (data: Record<string, any>) => {
     try {
-      console.log(JSON.stringify(data));
+      console.log(JSON.stringify(data.coordinator._id));
       await CourseService.criar(data);
       setSnackbarMessage("Curso cadastrado com sucesso!");
       setSnackbarSeverity("success");
       setSnackbarOpen(true);
-      setTimeout(() => router.push("/course/reportCourses"), 2000);
+      setTimeout(() => router.push("/course/reportCourses"));
     } catch (error) {
       console.error("Erro ao cadastrar o curso:", error);
       setSnackbarMessage("Erro ao cadastrar o curso.");

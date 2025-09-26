@@ -75,8 +75,8 @@ export const    professorFields: FieldConfig[] = [
         options: [
             { value: "active", label: "Ativo" },
             { value: "inactive", label: "Desativado" },
-            { value: "pending", label: "Pendente" },
-            { value: "on-leave", label: "Saindo" }
+            { value: "away", label: "Afastado" },
+            { value: "on-leave", label: "Licença" }
         ],
         required: true,
     },
